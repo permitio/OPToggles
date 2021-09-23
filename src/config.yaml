@@ -1,0 +1,19 @@
+opa:
+  address: 127.0.0.1:8181
+  jwt: something
+
+opal:
+  address: 127.0.0.1:7002
+  jwt: something
+
+togglesTarget:
+  TargetType: launchdarkly
+  ldAddress: 127.0.0.1:1337
+  ldJwt: something
+
+toggles:
+  - name: us-feature
+    query: "data.users[name].location.country = \"US\""
+  - name: admin-feature
+    query: "data.users[name].roles[_] = \"admin\""
+
