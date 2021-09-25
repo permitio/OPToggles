@@ -3,14 +3,11 @@ package config
 import (
 	"github.com/spf13/viper"
 	"log"
+	"optoggles/types"
 	"os"
 )
 
-type Toggle struct {
-	Name string
-	Query string
-}
-
+// OpTogglesConfig Values to be loaded from configuration file, keys are case-insensitive
 type OpTogglesConfig struct {
 	OPA struct {
 		Address string
@@ -26,16 +23,9 @@ type OpTogglesConfig struct {
 		LdAddress string
 		LdJWT string
 	}
-	Toggles []Toggle
+	Toggles []types.Toggle
 }
 
-func (otc *OpTogglesConfig) GetTogglesMap() map[string]string {
-	togglesMap := make(map[string]string)
-	for _, toggle := range otc.Toggles {
-		togglesMap[toggle.Name] = toggle.Query
-	}
-	return togglesMap
-}
 
 var GlobalConfig OpTogglesConfig
 
@@ -43,7 +33,7 @@ func init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("/etc/optoggles/") // TODO: Enable overriding it with a cmdline variable
-	viper.AddConfigPath(".")
+	viper.AddConfigPath(".") // TODO: This is for debug, leave it?
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {

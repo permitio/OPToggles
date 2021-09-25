@@ -12,7 +12,7 @@ func main() {
 	ctx := context.Background()
 	pub, _ := ldpublisher.NewPrintPublisher()
 	queryWorker, err := opaconnect.NewOpaQueryWorker(config.GlobalConfig.OPA.Address,
-		config.GlobalConfig.GetTogglesMap(), pub)
+		config.GlobalConfig.Toggles, pub)
 
 	if err != nil {
 		log.Fatalln(err)
