@@ -1,22 +1,41 @@
-opa:
-  address: 127.0.0.1:8181
-  jwt: something
+#sources:
+#  - name: yossi
+#    # opal client should get a token.
+#    # 2 apis:
+#    #   // Get OPA details
+#    #   // Register callback.
+#    #   //
+#    opa_address: 127.0.0.1:8181
+#    opal_client_address: 127.0.0.1:7000
+#    jwt: something
+#  -
 
-opal:
-  address: 127.0.0.1:7002
-  jwt: something
+sources:
+  - id: local
+    url: http://localhost:7000
+    token: ""
+    advertisedAddress: host.docker.internal:8080
 
-togglesTarget:
+target:
   targetType: launchdarkly
-  ldAddress: 127.0.0.1:1337
-  ldJwt: something
+  launchdarklyToken: "api-066a7c12-329f-4169-9eba-9f85b347e5b7"
 
 toggles:
-  - key: us-feature
+  - name: "US Feature"
     usersDocument:
+      source: local
       package: "app.rbac"
-      name: "us_users"
-  - key: billing-feature
+      rule: "us_users"
+    targetSpec:
+      key: "us-feature"
+      projKey: ""
+      environments: ["prod", "test"]
+  - name: "Billing Feature"
     usersDocument:
+      source: local
       package: "app.rbac"
-      name: "billing_users"
+      rule: "billing_users"
+    targetSpec:
+      key: "billing-feature"
+      projKey: ""
+      environments: [ "prod", "dev" ]

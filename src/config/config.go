@@ -3,29 +3,41 @@ package config
 import (
 	"github.com/spf13/viper"
 	"log"
-	"optoggles/types"
 	"os"
 )
 
 // OpTogglesConfig Values to be loaded from configuration file, keys are case-insensitive
-type OpTogglesConfig struct {
-	OPA struct {
-		Address string
-		JWT string
-	}
-	OPAL struct {
-		Address string
-		JWT string
-	}
-	TogglesTarget struct {
-		TargetType string
-		// TODO: Replace with generic map that decodes per target type
-		LdAddress string
-		LdJWT string
-	}
-	Toggles []types.Toggle
+
+type OpalConfig struct {
+	Id string
+	Url string
+	Token string
+	AdvertisedAddress string
 }
 
+type ToggleConfig struct {
+	Name string
+	UsersDocument struct {
+		Source string
+		Package string
+		Rule string
+	}
+	TargetSpec struct {
+		Key string
+		ProjKey string
+		Environments []string
+	}
+}
+
+type OpTogglesConfig struct {
+	Sources []OpalConfig
+	target struct {
+		TargetType string
+		// TODO: Replace with generic map that decodes per target type
+		LaunchdarklyToken string
+	}
+	Toggles []ToggleConfig
+}
 
 var GlobalConfig OpTogglesConfig
 
@@ -52,4 +64,3 @@ func init() {
 	log.Printf(os.Getwd())
 	log.Println("Loaded configuration file: ", GlobalConfig)
 }
-
