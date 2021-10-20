@@ -9,33 +9,35 @@ import (
 // OpTogglesConfig Values to be loaded from configuration file, keys are case-insensitive
 
 type OpalConfig struct {
-	Id string
-	Url string
-	Token string
+	Id                string
+	Url               string
+	Token             string
 	AdvertisedAddress string
 }
 
 type ToggleConfig struct {
-	Name string
+	Name          string
 	UsersDocument struct {
-		Source string
+		Source  string
 		Package string
-		Rule string
+		Rule    string
 	}
 	TargetSpec struct {
-		Key string
-		ProjKey string
+		Key          string
+		ProjKey      string
 		Environments []string
 	}
 }
 
+type TargetConfig struct {
+	TargetType string
+	// TODO: Replace with generic map that decodes per target type
+	LaunchdarklyToken string
+}
+
 type OpTogglesConfig struct {
 	Sources []OpalConfig
-	target struct {
-		TargetType string
-		// TODO: Replace with generic map that decodes per target type
-		LaunchdarklyToken string
-	}
+	Target  TargetConfig
 	Toggles []ToggleConfig
 }
 
@@ -45,7 +47,7 @@ func init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath("/etc/optoggles/") // TODO: Enable overriding it with a cmdline variable
-	viper.AddConfigPath(".") // TODO: This is for debug, leave it?
+	viper.AddConfigPath(".")               // TODO: This is for debug, leave it?
 
 	if err := viper.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {

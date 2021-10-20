@@ -18,7 +18,7 @@ sources:
 
 target:
   targetType: launchdarkly
-  launchdarklyToken: "api-066a7c12-329f-4169-9eba-9f85b347e5b7"
+  launchdarklyToken: "api-9ec0b416-8ed9-4390-a1d7-1f4e398ec515"
 
 toggles:
   - name: "US Feature"
@@ -28,14 +28,14 @@ toggles:
       rule: "us_users"
     targetSpec:
       key: "us-feature"
-      projKey: ""
-      environments: ["prod", "test"]
-  - name: "Billing Feature"
+      projKey: "default"
+      environments: [ "production", "test" ]
+  - name: "The Billing Feature"
     usersDocument:
       source: local
       package: "app.rbac"
       rule: "billing_users"
     targetSpec:
       key: "billing-feature"
-      projKey: ""
-      environments: [ "prod", "dev" ]
+      projKey: "default"
+      environments: [ "test" ]

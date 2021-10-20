@@ -7,20 +7,16 @@ import (
 )
 
 type LogPublisher struct {
-	flagsChan trackers.ToggleEvents
 }
 
-func NewLogPublisher(events trackers.ToggleEvents) *LogPublisher {
-	return &LogPublisher{
-		// This channel is not buffered, writer would block until the last operation is finished
-		flagsChan: events,
-	}
+func NewLogPublisher() *LogPublisher {
+	return &LogPublisher{}
 }
 
-func (pp *LogPublisher) Work(ctx context.Context) error {
+func (pp *LogPublisher) Work(ctx context.Context, flagsChan trackers.ToggleEvents) error {
 	for {
 		select {
-		case queryResult := <-pp.flagsChan:
+		case queryResult := <-flagsChan:
 			log.Printf("New configuration for user-authorized toggles")
 			log.Printf("* %s would be enabled for users: %s", queryResult.Toggle.TargetSpec.Key, queryResult.Users)
 		case <-ctx.Done():
