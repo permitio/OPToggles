@@ -28,17 +28,18 @@ func (ot *OpaTracker) Track(ctx context.Context, toggles []config.ToggleConfig, 
 	}
 
 	for {
-		if err = ot.opal.waitForTrigger(ctx); err != nil {
-			return
-		}
-
+		// First query without trigger, then wait
 		for _, t := range toggles {
 			var users []string
 			if users, err = opaClient.Query(ctx, t); err != nil {
-				// Retries?
+				// TODO: Retries?
 				log.Printf("Failed querying opa for toggle: " + t.Name)
 			}
 			results <- QueryResult{Toggle: t, Users: users}
+		}
+
+		if err = ot.opal.waitForTrigger(ctx); err != nil {
+			return
 		}
 	}
 }
