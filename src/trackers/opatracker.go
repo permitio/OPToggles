@@ -6,13 +6,12 @@ import (
 	"optoggles/config"
 )
 
-
 type OpaTracker struct {
-	opal *OpalClient
+	opal       *OpalClient
 	closeTrack context.CancelFunc // TODO: is that needed?
 }
 
-func (ot *OpaTracker) Track(ctx context.Context, toggles []config.ToggleConfig, results ToggleEvents) (err error) {
+func (ot *OpaTracker) Track(ctx context.Context, toggles []config.ToggleConfig, updates ToggleUpdates) (err error) {
 	// If one of the tracker's goroutine ends, finish all goroutrines
 	ctx, ot.closeTrack = context.WithCancel(ctx)
 
@@ -35,7 +34,7 @@ func (ot *OpaTracker) Track(ctx context.Context, toggles []config.ToggleConfig, 
 				// TODO: Retries?
 				log.Printf("Failed querying opa for toggle: " + t.Name)
 			}
-			results <- QueryResult{Toggle: t, Users: users}
+			updates <- ToggleUpdate{Toggle: t, Users: users}
 		}
 
 		if err = ot.opal.waitForTrigger(ctx); err != nil {
@@ -54,8 +53,8 @@ func NewOpaTracker(opalConfig config.OpalConfig) *OpaTracker {
 	return &OpaTracker{opal: NewOpalClient(opalConfig)}
 }
 
-func TrackAll(ctx context.Context, sources []config.OpalConfig, toggles []config.ToggleConfig) (results ToggleEvents) {
-	results = make(ToggleEvents)
+func TrackAll(ctx context.Context, sources []config.OpalConfig, toggles []config.ToggleConfig) (updates ToggleUpdates) {
+	updates = make(ToggleUpdates)
 
 	togglesBySource := make(map[string][]config.ToggleConfig)
 	for _, toggle := range toggles {
@@ -64,16 +63,16 @@ func TrackAll(ctx context.Context, sources []config.OpalConfig, toggles []config
 	}
 
 	for _, source := range sources {
-		go func(source config.OpalConfig, toggles []config.ToggleConfig, results ToggleEvents) {
+		go func(source config.OpalConfig, toggles []config.ToggleConfig, updates ToggleUpdates) {
 			tracker := NewOpaTracker(source)
 
 			for {
 				// TODO: better retries mechanism
-				err := tracker.Track(ctx, toggles, results)
+				err := tracker.Track(ctx, toggles, updates)
 				log.Printf("Tracking %s ended with error %s", source.Id, err.Error())
 			}
-		}(source, togglesBySource[source.Id], results)
+		}(source, togglesBySource[source.Id], updates)
 	}
 
-	return results
+	return updates
 }

@@ -22,7 +22,7 @@ type ToggleConfig struct {
 		Package string
 		Rule    string
 	}
-	TargetSpec struct {
+	Spec struct {
 		Key          string
 		ProjKey      string
 		Environments []string
@@ -59,6 +59,7 @@ func init() {
 	}
 	// Config file found and successfully parsed
 
+	// TODO: Add validation
 	if err := viper.Unmarshal(&GlobalConfig); err != nil {
 		panic("Can't unmarshal configuration: " + err.Error())
 	}

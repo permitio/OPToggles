@@ -8,8 +8,8 @@ import (
 )
 
 type Target interface {
-	CreateFlag(ctx context.Context, toggle config.ToggleConfig) error
-	Work(ctx context.Context, flagsChan trackers.ToggleEvents) error
+	CreateToggle(ctx context.Context, toggle config.ToggleConfig) error
+	SyncForever(ctx context.Context, flagsChan trackers.ToggleUpdates) error
 }
 
 func InitTarget(ctx context.Context, config config.TargetConfig, toggles []config.ToggleConfig) (target Target, err error) {
@@ -21,7 +21,7 @@ func InitTarget(ctx context.Context, config config.TargetConfig, toggles []confi
 	target = NewLaunchdarklyTarget(config.LaunchdarklyToken)
 
 	for _, toggle := range toggles {
-		if err = target.CreateFlag(ctx, toggle); err != nil {
+		if err = target.CreateToggle(ctx, toggle); err != nil {
 			return
 		}
 	}

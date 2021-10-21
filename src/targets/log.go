@@ -13,12 +13,12 @@ func NewLogPublisher() *LogPublisher {
 	return &LogPublisher{}
 }
 
-func (pp *LogPublisher) Work(ctx context.Context, flagsChan trackers.ToggleEvents) error {
+func (pp *LogPublisher) SyncForever(ctx context.Context, flagsChan trackers.ToggleUpdates) error {
 	for {
 		select {
-		case queryResult := <-flagsChan:
+		case ToggleUpdate := <-flagsChan:
 			log.Printf("New configuration for user-authorized toggles")
-			log.Printf("* %s would be enabled for users: %s", queryResult.Toggle.TargetSpec.Key, queryResult.Users)
+			log.Printf("* %s would be enabled for users: %s", ToggleUpdate.Toggle.Spec.Key, ToggleUpdate.Users)
 		case <-ctx.Done():
 			return ctx.Err()
 		}

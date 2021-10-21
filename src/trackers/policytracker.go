@@ -7,13 +7,11 @@ import (
 
 type PolicyTracker interface {
 	Track(ctx context.Context)
-	GetChanges(ctx context.Context)
 	Close()
 }
 
-type QueryResult struct {
+type ToggleUpdate struct {
 	Toggle config.ToggleConfig
 	Users []string
 }
-
-type ToggleEvents chan QueryResult
+type ToggleUpdates chan ToggleUpdate

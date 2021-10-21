@@ -26,16 +26,16 @@ toggles:
       source: local
       package: "app.rbac"
       rule: "us_users"
-    targetSpec:
+    spec:
       key: "us-feature"
       projKey: "default"
       environments: [ "production", "test" ]
-  - name: "The Billing Feature"
+  - name: "Billing Feature"
     usersDocument:
       source: local
       package: "app.rbac"
       rule: "billing_users"
-    targetSpec:
+    spec:
       key: "billing-feature"
       projKey: "default"
       environments: [ "test" ]

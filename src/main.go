@@ -15,7 +15,7 @@ func main() {
 		log.Fatalf("failed to initialize toggles target: %sv", err)
 	}
 
-	results := trackers.TrackAll(ctx, config.GlobalConfig.Sources, config.GlobalConfig.Toggles)
+	updates := trackers.TrackAll(ctx, config.GlobalConfig.Sources, config.GlobalConfig.Toggles)
 	log.Printf("Got an error: %b",
-		target.Work(ctx, results))
+		target.SyncForever(ctx, updates))
 }
