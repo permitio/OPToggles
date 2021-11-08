@@ -9,6 +9,7 @@
 #    opal_client_address: 127.0.0.1:7000
 #    jwt: something
 #  -
+bind: ":8080"
 
 sources:
   - id: local

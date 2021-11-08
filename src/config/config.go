@@ -2,11 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
-	"log"
-	"os"
 )
-
-// OpTogglesConfig Values to be loaded from configuration file, keys are case-insensitive
 
 type OpalConfig struct {
 	Id                string
@@ -27,17 +23,20 @@ type ToggleConfig struct {
 
 type TargetConfig struct {
 	TargetType string
-	// TODO: Replace with generic map that decodes per target type
 	TargetSpec map[string]interface{}
 }
 
+// OpTogglesConfig Values to be loaded from configuration file, keys are case-insensitive
 type OpTogglesConfig struct {
+	Bind    string
 	Sources []OpalConfig
 	Target  TargetConfig
 	Toggles []ToggleConfig
 }
 
-var GlobalConfig OpTogglesConfig
+var GlobalConfig = OpTogglesConfig{
+	Bind: ":8080", // Default value
+}
 
 func init() {
 	viper.SetConfigName("config")
@@ -50,16 +49,13 @@ func init() {
 			// Config file not found; ignore error if desired
 		} else {
 			// Config file was found but another error was produced
-			panic("Can't read config file: " + err.Error())
+			panic("failed reading configuration file: " + err.Error())
 		}
 	}
 	// Config file found and successfully parsed
 
 	// TODO: Add validation
 	if err := viper.Unmarshal(&GlobalConfig); err != nil {
-		panic("Can't unmarshal configuration: " + err.Error())
+		panic("invalid configuration file: " + err.Error())
 	}
-
-	log.Printf(os.Getwd())
-	log.Println("Loaded configuration file: ", GlobalConfig)
 }
