@@ -32,7 +32,7 @@ func (ot *OpaTracker) Track(ctx context.Context, toggles []config.ToggleConfig, 
 			var users []string
 			if users, err = opaClient.Query(ctx, t); err != nil {
 				// TODO: Retries?
-				log.Printf("Failed querying opa for toggle: " + t.Name)
+				log.Printf("Failed querying opa for toggle: " + t.Key)
 			}
 			updates <- ToggleUpdate{Toggle: t, Users: users}
 		}

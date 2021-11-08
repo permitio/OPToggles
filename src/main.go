@@ -17,5 +17,5 @@ func main() {
 
 	updates := trackers.TrackAll(ctx, config.GlobalConfig.Sources, config.GlobalConfig.Toggles)
 	log.Printf("Got an error: %b",
-		target.SyncForever(ctx, updates))
+		targets.SyncTargetForever(ctx, target, updates))
 }

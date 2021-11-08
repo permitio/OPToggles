@@ -18,24 +18,29 @@ sources:
 
 target:
   targetType: launchdarkly
-  launchdarklyToken: "api-9ec0b416-8ed9-4390-a1d7-1f4e398ec515"
+  targetSpec:
+    #    endpointUrl: "http://localhost:1234/toggles"
+    #    extraHeaders:
+    #      shalosh: "sfd"
+    launchdarklyToken: "api-5549abd8-5683-4f16-9d2f-e1797b132a02"
 
 toggles:
-  - name: "US Feature"
+  - key: "us-feature"
     usersDocument:
       source: local
       package: "app.rbac"
       rule: "us_users"
     spec:
-      key: "us-feature"
+      name: "US Feature"
+      #      description: "very flag"
       projKey: "default"
       environments: [ "production", "test" ]
-  - name: "Billing Feature"
+  - key: "billing-feature"
     usersDocument:
       source: local
       package: "app.rbac"
       rule: "billing_users"
     spec:
-      key: "billing-feature"
+      name: "Billing Feature"
       projKey: "default"
       environments: [ "test" ]

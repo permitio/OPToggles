@@ -11,7 +11,7 @@ import (
 )
 
 type OpaClient struct {
-	url string
+	url   string
 	token string
 }
 
@@ -20,7 +20,7 @@ func getOpaEndpoint(t *config.ToggleConfig) string {
 }
 
 func (oc *OpaClient) Query(ctx context.Context, toggleConfig config.ToggleConfig) (users []string, err error) {
-	log.Printf("Querying users in %s for toggle %s", getOpaEndpoint(&toggleConfig), toggleConfig.Name)
+	log.Printf("Querying users in %s for toggle %s", getOpaEndpoint(&toggleConfig), toggleConfig.Key)
 
 	var responseData []byte
 	if responseData, err = utils.HttpGetBody(ctx, oc.url, getOpaEndpoint(&toggleConfig), oc.token); err != nil {
@@ -43,7 +43,7 @@ func (oc *OpaClient) Query(ctx context.Context, toggleConfig config.ToggleConfig
 
 func NewOpaClient(url, token string) *OpaClient {
 	return &OpaClient{
-		url: url,
+		url:   url,
 		token: token,
 	}
 }

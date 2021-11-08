@@ -16,23 +16,19 @@ type OpalConfig struct {
 }
 
 type ToggleConfig struct {
-	Name          string
+	Key           string
 	UsersDocument struct {
 		Source  string
 		Package string
 		Rule    string
 	}
-	Spec struct {
-		Key          string
-		ProjKey      string
-		Environments []string
-	}
+	Spec map[string]interface{}
 }
 
 type TargetConfig struct {
 	TargetType string
 	// TODO: Replace with generic map that decodes per target type
-	LaunchdarklyToken string
+	TargetSpec map[string]interface{}
 }
 
 type OpTogglesConfig struct {

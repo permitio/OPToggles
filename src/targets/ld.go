@@ -2,36 +2,69 @@ package targets
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	ldapi "github.com/launchdarkly/api-client-go"
 	"log"
-	"optoggles/config"
-	"optoggles/trackers"
+	"net/http"
+
+	ldapi "github.com/launchdarkly/api-client-go"
+	"github.com/mitchellh/mapstructure"
 )
 
+type LaunchdarklyTargetSpec struct {
+	LaunchdarklyToken string
+}
+
 type LaunchdarklyTarget struct {
-	auth   ldapi.APIKey
-	client *ldapi.APIClient
+	auth    ldapi.APIKey
+	client  *ldapi.APIClient
+	toggles map[string]LDToggleSpec
 }
 
-func NewLaunchdarklyTarget(token string) *LaunchdarklyTarget {
-	return &LaunchdarklyTarget{
-		auth:   ldapi.APIKey{Key: token},
-		client: ldapi.NewAPIClient(ldapi.NewConfiguration()),
+type LDToggleSpec struct {
+	Name         string
+	ProjKey      string
+	Environments []string
+}
+
+func NewLaunchdarklyTarget(spec map[string]interface{}) (*LaunchdarklyTarget, error) {
+	ldSpec := LaunchdarklyTargetSpec{}
+	if err := mapstructure.Decode(spec, &ldSpec); err != nil {
+		return nil, err
 	}
+
+	return &LaunchdarklyTarget{
+		auth:    ldapi.APIKey{Key: ldSpec.LaunchdarklyToken},
+		client:  ldapi.NewAPIClient(ldapi.NewConfiguration()),
+		toggles: make(map[string]LDToggleSpec),
+	}, nil
 }
 
-func (pp *LaunchdarklyTarget) CreateToggle(ctx context.Context, toggle config.ToggleConfig) error {
-	ctx = context.WithValue(ctx, ldapi.ContextAPIKey, pp.auth)
+func (ldt *LaunchdarklyTarget) getContext(ctx context.Context) context.Context {
+	return context.WithValue(ctx, ldapi.ContextAPIKey, ldt.auth)
+}
+
+func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spec map[string]interface{}) error {
+	if _, keyExists := ldt.toggles[key]; keyExists {
+		return errors.New("duplicated toggle key")
+	}
+
+	var toggleSpec LDToggleSpec
+	if err := mapstructure.Decode(spec, &toggleSpec); err != nil {
+		return err
+	}
+
+	ctx = ldt.getContext(ctx)
 
 	// Flags are created by default as boolean with true/false variations
-	flag, resp, err := pp.client.FeatureFlagsApi.PostFeatureFlag(ctx, toggle.Spec.ProjKey,
-		ldapi.FeatureFlagBody{Name: toggle.Name, Key: toggle.Spec.Key}, nil)
+	flag, resp, err := ldt.client.FeatureFlagsApi.PostFeatureFlag(ctx, toggleSpec.ProjKey,
+		ldapi.FeatureFlagBody{Name: toggleSpec.Name, Key: key}, nil)
 
-	if resp.StatusCode == 409 {
+	if resp != nil && resp.StatusCode == http.StatusConflict {
+		// Flag already exists - make sure we also update the name
 		// Flag exists - just update the name
-		var name interface{} = toggle.Name
-		flag, resp, err = pp.client.FeatureFlagsApi.PatchFeatureFlag(ctx, toggle.Spec.ProjKey, toggle.Spec.Key,
+		var name interface{} = toggleSpec.Name
+		flag, resp, err = ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx, toggleSpec.ProjKey, key,
 			ldapi.PatchComment{Patch: []ldapi.PatchOperation{
 				ldapi.PatchOperation{Op: "replace", Path: "/name", Value: &name},
 			}})
@@ -40,43 +73,33 @@ func (pp *LaunchdarklyTarget) CreateToggle(ctx context.Context, toggle config.To
 		return err
 	}
 
-	// Turn on targeting per environment, with false as the default variation
-	// TODO: Reuse code
+	fmt.Printf("Created flag: %+v\n", flag)
+	ldt.toggles[key] = toggleSpec
+	return nil
+}
+
+func (ldt *LaunchdarklyTarget) UpdateToggleWithUsers(ctx context.Context, key string, users []string) error {
+	toggleSpec := ldt.toggles[key]
+	ctx = ldt.getContext(ctx)
+
 	patches := make([]ldapi.PatchOperation, 0)
-	for _, env := range toggle.Spec.Environments {
+	for _, env := range toggleSpec.Environments {
+		// Turn on targeting per environment,
 		var on interface{} = true
 		patches = append(patches, ldapi.PatchOperation{
 			Op:    "replace",
 			Path:  fmt.Sprintf("/environments/%s/on", env),
 			Value: &on,
 		})
+		// With false as the default variation,
 		var ft interface{} = map[string]interface{}{"variation": 1}
 		patches = append(patches, ldapi.PatchOperation{
 			Op:    "replace",
 			Path:  fmt.Sprintf("/environments/%s/fallthrough", env),
 			Value: &ft,
 		})
-	}
-
-	flag, resp, err = pp.client.FeatureFlagsApi.PatchFeatureFlag(ctx,
-		toggle.Spec.ProjKey,
-		toggle.Spec.Key,
-		ldapi.PatchComment{Patch: patches})
-
-	if err != nil {
-		return err
-	}
-
-	fmt.Printf("Created flag: %+v\n", flag)
-	return nil
-}
-
-func (pp *LaunchdarklyTarget) UpdateToggleWithUsers(ctx context.Context, result trackers.ToggleUpdate) error {
-	ctx = context.WithValue(ctx, ldapi.ContextAPIKey, pp.auth)
-
-	patches := make([]ldapi.PatchOperation, 0)
-	for _, env := range result.Toggle.Spec.Environments {
-		var users interface{} = []map[string]interface{}{{"variation": 0, "values": result.Users}}
+		// And targeting allowed users with the 'true' variation.
+		var users interface{} = []map[string]interface{}{{"variation": 0, "values": users}}
 		patches = append(patches, ldapi.PatchOperation{
 			Op:    "replace",
 			Path:  fmt.Sprintf("/environments/%s/targets", env),
@@ -84,9 +107,9 @@ func (pp *LaunchdarklyTarget) UpdateToggleWithUsers(ctx context.Context, result 
 		})
 	}
 
-	flag, resp, err := pp.client.FeatureFlagsApi.PatchFeatureFlag(ctx,
-		result.Toggle.Spec.ProjKey,
-		result.Toggle.Spec.Key,
+	flag, resp, err := ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx,
+		toggleSpec.ProjKey,
+		key,
 		ldapi.PatchComment{Patch: patches})
 	log.Println(resp, err)
 
@@ -95,18 +118,4 @@ func (pp *LaunchdarklyTarget) UpdateToggleWithUsers(ctx context.Context, result 
 	}
 	fmt.Printf("Updated flag: %+v\n", flag)
 	return nil
-}
-
-func (pp *LaunchdarklyTarget) SyncForever(ctx context.Context, togglesChan trackers.ToggleUpdates) error {
-	for {
-		select {
-		case ToggleUpdate := <-togglesChan:
-			if err := pp.UpdateToggleWithUsers(ctx, ToggleUpdate); err != nil {
-				// TODO: ?
-				log.Printf("updating flag's target users failed: %v", err)
-			}
-		case <-ctx.Done():
-			return ctx.Err()
-		}
-	}
 }
