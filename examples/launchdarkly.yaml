@@ -1,0 +1,32 @@
+bind: ":8080"
+
+sources:
+  - id: local
+    url: http://localhost:7000
+    token: ""
+    advertisedAddress: host.docker.internal:8080
+
+target:
+  targetType: launchdarkly
+  targetSpec:
+    launchdarklyToken: "api-5549abd8-5683-4f16-9d2f-e1797b132a02"
+
+toggles:
+  - key: "us-feature"
+    usersDocument:
+      source: local
+      package: "app.rbac"
+      rule: "us_users"
+    spec:
+      name: "US Feature"
+      projKey: "default"
+      environments: [ "production", "test" ]
+  - key: "billing-feature"
+    usersDocument:
+      source: local
+      package: "app.rbac"
+      rule: "billing_users"
+    spec:
+      name: "Billing Feature"
+      projKey: "default"
+      environments: [ "test" ]

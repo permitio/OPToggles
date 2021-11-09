@@ -1,0 +1,32 @@
+bind: ":8080"
+
+sources:
+  - id: local
+    url: http://localhost:7000
+    token: ""
+    advertisedAddress: host.docker.internal:8080
+
+target:
+  targetType: launchdarkly
+  targetSpec:
+    endpointUrl: "http://localhost:1234/toggles"
+    extraHeaders:
+      Authorization: "YOUR AUTH TOKEN HERE"
+
+toggles:
+  - key: "us-feature"
+    usersDocument:
+      source: local
+      package: "app.rbac"
+      rule: "us_users"
+    spec:
+      name: "US Feature"
+      description: "US residents only section"
+  - key: "billing-feature"
+    usersDocument:
+      source: local
+      package: "app.rbac"
+      rule: "billing_users"
+    spec:
+      name: "Billing Feature"
+      description: "Access billing dashboard"
