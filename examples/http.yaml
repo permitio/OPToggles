@@ -15,7 +15,7 @@ target:
 
 toggles:
   - key: "us-feature"
-    usersDocument:
+    usersPolicy:
       source: local
       package: "app.rbac"
       rule: "us_users"
@@ -23,7 +23,7 @@ toggles:
       name: "US Feature"
       description: "US residents only section"
   - key: "billing-feature"
-    usersDocument:
+    usersPolicy:
       source: local
       package: "app.rbac"
       rule: "billing_users"

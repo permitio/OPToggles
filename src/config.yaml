@@ -27,7 +27,7 @@ target:
 
 toggles:
   - key: "us-feature"
-    usersDocument:
+    usersPolicy:
       source: local
       package: "app.rbac"
       rule: "us_users"
@@ -37,7 +37,7 @@ toggles:
       projKey: "default"
       environments: [ "production", "test" ]
   - key: "billing-feature"
-    usersDocument:
+    usersPolicy:
       source: local
       package: "app.rbac"
       rule: "billing_users"

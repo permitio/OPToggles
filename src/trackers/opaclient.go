@@ -17,7 +17,7 @@ type OpaClient struct {
 }
 
 func getOpaEndpoint(t *config.ToggleConfig) string {
-	return "/v1/data/" + strings.ReplaceAll(t.UsersDocument.Package, ".", "/") + "/" + t.UsersDocument.Rule
+	return "/v1/data/" + strings.ReplaceAll(t.UsersPolicy.Package, ".", "/") + "/" + t.UsersPolicy.Rule
 }
 
 func (oc *OpaClient) Query(ctx context.Context, toggleConfig config.ToggleConfig) (users []string, err error) {

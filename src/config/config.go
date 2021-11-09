@@ -12,8 +12,8 @@ type OpalConfig struct {
 }
 
 type ToggleConfig struct {
-	Key           string
-	UsersDocument struct {
+	Key         string
+	UsersPolicy struct {
 		Source  string
 		Package string
 		Rule    string

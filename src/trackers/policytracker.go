@@ -46,7 +46,7 @@ func NewPolicyTracker(sources []config.OpalConfig, toggles []config.ToggleConfig
 
 	pt.togglesBySource = make(map[string][]config.ToggleConfig)
 	for _, toggle := range toggles {
-		srcId := toggle.UsersDocument.Source
+		srcId := toggle.UsersPolicy.Source
 
 		if _, sourceExists := pt.togglesBySource[srcId]; !sourceExists {
 			err = errors.New(fmt.Sprintf("toggle %v points to non existing source %v", toggle.Key, srcId))
