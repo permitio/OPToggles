@@ -1,29 +1,29 @@
 bind: ":8080"
 
 sources:
-  - id: local
-    url: http://localhost:7000
+  - id: example-opal
+    url: http://opal_client:7000
     token: ""
-    advertisedAddress: host.docker.internal:8080
+    advertisedAddress: optoggles:8080
 
 target:
   targetType: launchdarkly
-  targetSpec:
-    launchdarklyToken: "api-5549abd8-5683-4f16-9d2f-e1797b132a02"
+    # Replace with your API token
+    launchdarklyToken: "api-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 toggles:
   - key: "us-feature"
     usersPolicy:
-      source: local
+      source: example-opal
       package: "app.rbac"
       rule: "us_users"
     spec:
-      name: "US Feature"
+      name: "US Only Feature"
       projKey: "default"
       environments: [ "production", "test" ]
   - key: "billing-feature"
     usersPolicy:
-      source: local
+      source: example-opal
       package: "app.rbac"
       rule: "billing_users"
     spec:

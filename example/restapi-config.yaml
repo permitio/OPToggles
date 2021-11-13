@@ -1,30 +1,30 @@
 bind: ":8080"
 
 sources:
-  - id: local
-    url: http://localhost:7000
+  - id: example-opal
+    url: http://opal_client:7000
     token: ""
-    advertisedAddress: host.docker.internal:8080
+    advertisedAddress: optoggles:8080
 
 target:
   targetType: launchdarkly
   targetSpec:
-    endpointUrl: "http://localhost:1234/toggles"
+    endpointUrl: "https://httpbin.org/anything/toggles"
     extraHeaders:
-      Authorization: "YOUR AUTH TOKEN HERE"
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 toggles:
   - key: "us-feature"
     usersPolicy:
-      source: local
+      source: example-opal
       package: "app.rbac"
       rule: "us_users"
     spec:
-      name: "US Feature"
+      name: "US Only Feature"
       description: "US residents only section"
   - key: "billing-feature"
     usersPolicy:
-      source: local
+      source: example-opal
       package: "app.rbac"
       rule: "billing_users"
     spec:
