@@ -58,7 +58,11 @@ func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spe
 
 	// Flags are created by default as boolean with true/false variations
 	flag, resp, err := ldt.client.FeatureFlagsApi.PostFeatureFlag(ctx, toggleSpec.ProjKey,
-		ldapi.FeatureFlagBody{Name: toggleSpec.Name, Key: key}, nil)
+		ldapi.FeatureFlagBody{
+			Name:                   toggleSpec.Name,
+			Key:                    key,
+			ClientSideAvailability: &ldapi.ClientSideAvailability{UsingEnvironmentId: true, UsingMobileKey: true}},
+		nil)
 
 	if resp != nil && resp.StatusCode == http.StatusConflict {
 		// Flag already exists - make sure we also update the name
