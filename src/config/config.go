@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/spf13/viper"
+	"log"
 )
 
 type OpalConfig struct {
@@ -41,21 +42,16 @@ var GlobalConfig = OpTogglesConfig{
 func init() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("/etc/optoggles/") // TODO: Enable overriding it with a cmdline variable
-	viper.AddConfigPath(".")               // TODO: This is for debug, leave it?
+	viper.AddConfigPath("/etc/optoggles/")
+	viper.AddConfigPath(".") // Useful for development
 
 	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
-			// Config file not found; ignore error if desired
-		} else {
-			// Config file was found but another error was produced
-			panic("failed reading configuration file: " + err.Error())
-		}
+		log.Fatalln("failed reading configuration file: " + err.Error())
 	}
 	// Config file found and successfully parsed
 
 	// TODO: Add validation
 	if err := viper.Unmarshal(&GlobalConfig); err != nil {
-		panic("invalid configuration file: " + err.Error())
+		log.Fatalln("invalid configuration file: " + err.Error())
 	}
 }
