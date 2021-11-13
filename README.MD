@@ -57,12 +57,12 @@ toggles:
   - key: "somefeature"
     usersPolicy:
       source: myopal
-      package: "app.rbac"
+      package: "app.rules"
       rule: "somefeature_users"
     spec:
       name: "Some Feature Toggle"
       projKey: "default"
-      environments: [ "production", "test" ]
+      environments: [ "production", "staging" ]
 ```
 
 - Optoggles would register to receive callbacks on policy/data changes from `OPAL Client` instance running
@@ -75,9 +75,13 @@ toggles:
 
 # <a name="design"></a>🤿 How Does It Work
 
-### <a name="healthchecks"></a>Health Checks
+### <a name="launchdarkly"></a>OPA & OPAL Integration
 
-### <a name="httpserver"></a>Generic HTTP Server
+### <a name="launchdarkly"></a>The LaunchDarkly Target
+
+### <a name="httpserver"></a>The Generic REST API Target
+
+### <a name="healthchecks"></a>Health Checks
 
 # <a name="walkthrough"></a>🦮 First OPToggle Walkthrough
 
