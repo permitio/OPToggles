@@ -16,7 +16,7 @@ Open policy based feature toggling
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
 
-`OPToggles` was built to bring the power of `OPA` & `OPAL` into your existing feature toggling solutions. <br/>
+`OPToggles` was built to bring the power of `OPA` + `OPAL` into your existing feature toggling solutions. <br/>
 It enables you to create user targeted feature flags/toggles based on `OPA` managed authorization rules, and keep them
 synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 
