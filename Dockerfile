@@ -12,8 +12,9 @@ RUN go build -o /optoggles
 FROM debian:10
 
 WORKDIR /
-COPY --from=build /optoggles ./optoggles
+RUN apt-get update && apt-get install -y ca-certificates && apt-get clean
 RUN groupadd -r nonroot && useradd -r -g nonroot nonroot
+COPY --from=build /optoggles ./optoggles
 USER nonroot:nonroot
 
 ENTRYPOINT ["/optoggles"]
