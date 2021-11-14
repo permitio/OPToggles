@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 
 	ldapi "github.com/launchdarkly/api-client-go"
@@ -77,7 +76,6 @@ func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spe
 		return err
 	}
 
-	fmt.Printf("Created flag: %+v\n", flag)
 	ldt.toggles[key] = toggleSpec
 	return nil
 }
@@ -111,15 +109,13 @@ func (ldt *LaunchdarklyTarget) UpdateToggleWithUsers(ctx context.Context, key st
 		})
 	}
 
-	flag, resp, err := ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx,
+	_, _, err := ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx,
 		toggleSpec.ProjKey,
 		key,
 		ldapi.PatchComment{Patch: patches})
-	log.Println(resp, err)
 
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Updated flag: %+v\n", flag)
 	return nil
 }
