@@ -14,7 +14,6 @@ services:
       - UVICORN_NUM_WORKERS=4
       - OPAL_POLICY_REPO_URL=https://github.com/authorizon/OPToggles
       - OPAL_POLICY_REPO_MANIFEST_PATH=example/policy/.manifest
-      - OPAL_POLICY_REPO_MAIN_BRANCH=main
       - OPAL_POLICY_REPO_POLLING_INTERVAL=30
       - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"http://host.docker.internal:7002/policy-data","topics":["policy_data"]}]}}
     ports:
