@@ -56,7 +56,7 @@ func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spe
 	ctx = ldt.getContext(ctx)
 
 	// Flags are created by default as boolean with true/false variations
-	flag, resp, err := ldt.client.FeatureFlagsApi.PostFeatureFlag(ctx, toggleSpec.ProjKey,
+	_, resp, err := ldt.client.FeatureFlagsApi.PostFeatureFlag(ctx, toggleSpec.ProjKey,
 		ldapi.FeatureFlagBody{
 			Name:                   toggleSpec.Name,
 			Key:                    key,
@@ -67,7 +67,7 @@ func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spe
 		// Flag already exists - make sure we also update the name
 		// Flag exists - just update the name
 		var name interface{} = toggleSpec.Name
-		flag, resp, err = ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx, toggleSpec.ProjKey, key,
+		_, resp, err = ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx, toggleSpec.ProjKey, key,
 			ldapi.PatchComment{Patch: []ldapi.PatchOperation{
 				ldapi.PatchOperation{Op: "replace", Path: "/name", Value: &name},
 			}})
