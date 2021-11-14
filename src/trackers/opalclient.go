@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"net"
+	"net/url"
 	"optoggles/config"
 	"optoggles/httpserver"
 	"optoggles/utils"
@@ -17,6 +19,22 @@ type Trigger interface {
 type OpalClient struct {
 	config      config.OpalConfig
 	triggerChan chan bool
+}
+
+func (oc *OpalClient) normalizeLoopbackUrl(rawUrl string) (string, error) {
+	opaUrl, err := url.Parse(rawUrl)
+	if err != nil {
+		return "", err
+	}
+
+	opaHostname := opaUrl.Hostname()
+	if opaHostname == "localhost" || opaHostname == "127.0.0.1" {
+		// OPAL runs OPA in the same container - we should use OPAL's host name instead
+		opalUrl, _ := url.Parse(oc.config.Url)
+		opaUrl.Host = net.JoinHostPort(opalUrl.Hostname(), opaUrl.Port())
+	}
+
+	return opaUrl.String(), nil
 }
 
 func (oc *OpalClient) getOpaClient(ctx context.Context) (opaClient *OpaClient, err error) {
@@ -35,6 +53,9 @@ func (oc *OpalClient) getOpaClient(ctx context.Context) (opaClient *OpaClient, e
 		log.Printf("Can't parse OPA query result: " + err.Error())
 		return
 	}
+
+	responseJson.Url, err = oc.normalizeLoopbackUrl(responseJson.Url)
+
 	log.Printf("OPA details. url: %s, token: %s", responseJson.Url, responseJson.Token)
 
 	return NewOpaClient(responseJson.Url, responseJson.Token), nil
