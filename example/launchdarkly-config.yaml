@@ -8,6 +8,7 @@ sources:
 
 target:
   targetType: launchdarkly
+  targetSpec:
     # Replace with your API token
     launchdarklyToken: "api-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
