@@ -31,7 +31,7 @@ synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 # <a name="quick-start"></a>⚡️ Quick Start
 
 OpToggles should be run as a docker container. <br/>
-Port 8080 should be exposed to listen to both OPAL trigger callbacks & http health checks. And configuration yaml file
+Port 8080 should be exposed to listen to both OPAL trigger callbacks and http health checks. And configuration yaml file
 could be supplied through a volume mount.
 
 For example:
@@ -76,7 +76,7 @@ toggles:
 
 # <a name="design"></a>🤿 How Does It Work
 
-### <a name="launchdarkly"></a>OPA & OPAL Integration
+### <a name="launchdarkly"></a>OPA + OPAL Integration
 
 ### <a name="launchdarkly"></a>The LaunchDarkly Target
 
@@ -88,7 +88,7 @@ toggles:
 
 Let's walk you through setting up your first open policy based feature toggles, integrated with `LaunchDarkly`!
 
-### Setup `OPA` & `OPAL`
+### Setup `OPA` + `OPAL`
 
 We'll use `docker-compose` for the task, the end result is
 available [here](https://github.com/authorizon/OPToggles/tree/master/example).
@@ -124,7 +124,7 @@ us_users[users]{
 This snippet declares two sets of users: `billing_users` returns a set of all users that have the billing
 role. `us_users` returns a set of all users which are located in the US.
 
-We want to feed `OPA` with this data & policies, for that - we'll use `OPAL`'
+We want to feed `OPA` with that data & policies, for that - we'll use `OPAL`'
 s [git-tracking capabilities](https://github.com/authorizon/opal/blob/master/docs/HOWTO/track_a_git_repo.md):
 
 1. Put both the policy & data files in a git repo with a `.manifest`  file listing the files paths `OPAL` need to track.
@@ -238,8 +238,8 @@ our [docker-compose](https://github.com/authorizon/OPToggles/blob/master/example
       - $PWD/launchdarkly-config.yaml:/etc/optoggles/config.yaml
 ```
 
-Setting `restart` to `on-failure` is comfortable solution to handle errors on `OPToggles` initiation when rest of the
-containers are not fully started.
+Setting `restart` to `on-failure` is useful for errors on `OPToggles` initiation when rest of the containers are not
+fully started.
 
 Now that we have everything in place - let's bring it up!
 
@@ -251,6 +251,8 @@ docker-compose up -d
 
 If everything went well. you should see the newly created flags in your `LaunchDarkly` account:
 
+<img src="https://i.ibb.co/QncsFG7/toggle-before.png" alt="toggle-before" border="0">
+
 Let's update bob's location to another country:
 
 ```shell
@@ -258,6 +260,9 @@ opal-client publish-data-update --src-url https://api.country.is/23.54.6.78 -t p
 ```
 
 And our "US Only Feature" should be immediately updated to exclude "bob"!
+
+<img src="https://i.ibb.co/d2P71BJ/toggle-after.png" alt="toggle-after"/>
+
 
 You can integrate these new toggles into your client-side code like you would with any other `LaunchDarkly` flag. If
 that's your first time - https://docs.launchdarkly.com/sdk/client-side.
@@ -290,7 +295,7 @@ toggles:
 
 | **Path** | **Type** | **Description** |
 | :--- | :--- | :--- |
-| bind | string | Bind address for OpToggles' HTTP server. This server is use for getting update triggers from `OPAL` & for serving health checks. |
+| bind | string | Bind address for OpToggles' HTTP server. This server is use for getting update triggers from `OPAL` and for serving health checks. |
 
 ### Sources
 
@@ -308,7 +313,8 @@ Each `source` includes the following attributes
 
 ### Target
 
-The `target` section tells `OPToggles` where it should create & sync its user-authorized toggles to. Supported targets:
+The `target` section tells `OPToggles` where it should create and sync its user-authorized toggles to. Supported
+targets:
 
 - The [LaunchDarkly](https://launchdarkly.com/) Feature management platform
 - Generic REST API HTTP Server - [More Info](#httpserver)
