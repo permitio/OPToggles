@@ -12,7 +12,7 @@ services:
     environment:
       - OPAL_POLICY_REPO_URL=https://github.com/authorizon/OPToggles
       - OPAL_POLICY_REPO_MAIN_BRANCH=master
-      - OPAL_POLICY_REPO_MANIFEST_PATH=.manifest
+      - OPAL_POLICY_REPO_MANIFEST_PATH=example/policy/.manifest
       - OPAL_POLICY_REPO_POLLING_INTERVAL=30
       - OPAL_BROADCAST_URI=postgres://postgres:postgres@broadcast_channel:5432/postgres
       - UVICORN_NUM_WORKERS=4
