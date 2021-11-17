@@ -7,7 +7,7 @@ sources:
     advertisedAddress: optoggles:8080
 
 target:
-  targetType: launchdarkly
+  targetType: restapi
   targetSpec:
     endpointUrl: "https://httpbin.org/anything/toggles"
     extraHeaders:

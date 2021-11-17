@@ -12,26 +12,26 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-type HttpTargetSpec struct {
+type RestApiTargetSpec struct {
 	EndpointUrl  string
 	ExtraHeaders map[string]string
 }
 
-type HttpTarget struct {
-	HttpTargetSpec
+type RestApiTarget struct {
+	RestApiTargetSpec
 	toggles map[string]map[string]interface{}
 }
 
-func NewHttpTarget(spec map[string]interface{}) (*HttpTarget, error) {
-	ht := HttpTarget{toggles: make(map[string]map[string]interface{})}
+func NewRestApiTarget(spec map[string]interface{}) (*RestApiTarget, error) {
+	ht := RestApiTarget{toggles: make(map[string]map[string]interface{})}
 	log.Println(spec)
-	if err := mapstructure.Decode(spec, &ht.HttpTargetSpec); err != nil {
+	if err := mapstructure.Decode(spec, &ht.RestApiTargetSpec); err != nil {
 		return nil, err
 	}
 	return &ht, nil
 }
 
-func (ht *HttpTarget) doRequest(ctx context.Context, method string, endpoint string, data interface{}) (*http.Response, error) {
+func (ht *RestApiTarget) doRequest(ctx context.Context, method string, endpoint string, data interface{}) (*http.Response, error) {
 	marshaledData, err := json.Marshal(data)
 	if err != nil {
 		return nil, err
@@ -50,7 +50,7 @@ func (ht *HttpTarget) doRequest(ctx context.Context, method string, endpoint str
 	return utils.DoRequest(req)
 }
 
-func (ht *HttpTarget) CreateToggle(ctx context.Context, key string, spec map[string]interface{}) error {
+func (ht *RestApiTarget) CreateToggle(ctx context.Context, key string, spec map[string]interface{}) error {
 	if _, keyExists := ht.toggles[key]; keyExists {
 		return errors.New("duplicated toggle key")
 	}
@@ -73,7 +73,7 @@ func (ht *HttpTarget) CreateToggle(ctx context.Context, key string, spec map[str
 	return nil
 }
 
-func (ht *HttpTarget) UpdateToggleWithUsers(ctx context.Context, key string, users []string) error {
+func (ht *RestApiTarget) UpdateToggleWithUsers(ctx context.Context, key string, users []string) error {
 	patchData := make(map[string]interface{})
 	patchData["users"] = users
 	for k, v := range ht.toggles[key] {

@@ -55,10 +55,10 @@ func NewTargetSync(config config.TargetConfig) (ts *TargetSync, err error) {
 	switch config.TargetType {
 	case "launchdarkly":
 		ts.target, err = NewLaunchdarklyTarget(config.TargetSpec)
-	case "http":
-		ts.target, err = NewHttpTarget(config.TargetSpec)
+	case "restapi":
+		ts.target, err = NewRestApiTarget(config.TargetSpec)
 	default:
-		err = errors.New("target type isn't supported. currently supports: [launchdarkly, http]")
+		err = errors.New("target type isn't supported. currently supports: [launchdarkly, restapi]")
 	}
 	return
 }
