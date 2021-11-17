@@ -56,6 +56,10 @@ func (cs *CallbackServer) RegisterHandler() {
 		}
 
 		if trigger, ok := cs.triggers[sourceTrackerId]; ok {
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte("{}"))
+
 			log.Printf("Got callback from opal source %s", sourceTrackerId)
 			trigger <- true
 		} else {
