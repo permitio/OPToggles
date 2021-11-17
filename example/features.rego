@@ -2,12 +2,12 @@ package app.rbac
 
 billing_users[users]{
   some user, i
-  data.users[user].roles[i] == "billing"
+  data.example.users[user].roles[i] == "billing"
   users := user
 }
 
 us_users[users]{
   some user
-  data.users[user].location.country == "US"
+  data.example.users[user].location.country == "US"
   users := user
 }
