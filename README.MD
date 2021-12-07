@@ -74,6 +74,12 @@ toggles:
   by the policy. (and create the toggle if it doesn't already exists)
 - Health checks are available under `http://optoggles:8080/health[/live,/started]` ([More details](#healthchecks))
 
+Building your own version of `OpToggles` is as simple as:
+
+```shell
+docker build . -t optoggles:$IMAGE_TAG
+```
+
 # <a name="design"></a>🤿 How Does It Work
 
 ## <a name="opa"></a>OPA + OPAL Integration
