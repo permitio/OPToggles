@@ -16,6 +16,8 @@ Open policy based feature toggling
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
 
+<img src="docs/optoggles-demo.gif" alt="OPToggles Demo">
+
 `OPToggles` was built to bring the power of `OPA` + `OPAL` into your existing feature toggling solutions. <br/>
 It enables you to create user targeted feature flags/toggles based on `OPA` managed authorization rules, and keep them
 synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
@@ -30,7 +32,7 @@ synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 
 # <a name="quick-start"></a>⚡️ Quick Start
 
-OpToggles should be run as a docker container. <br/>
+OPToggles should be run as a docker container. <br/>
 Port 8080 should be exposed to listen to both OPAL trigger callbacks and http health checks. And configuration yaml file
 could be supplied through a volume mount.
 
@@ -74,7 +76,7 @@ toggles:
   by the policy. (and create the toggle if it doesn't already exists)
 - Health checks are available under `http://optoggles:8080/health[/live,/started]` ([More details](#healthchecks))
 
-Building your own version of `OpToggles` is as simple as:
+Building your own version of `OPToggles` is as simple as:
 
 ```shell
 docker build . -t optoggles:$IMAGE_TAG
@@ -84,16 +86,16 @@ docker build . -t optoggles:$IMAGE_TAG
 
 ## <a name="opa"></a>OPA + OPAL Integration
 
-OpToggles uses `OPA` as the source of truth regarding what users are authorized for each feature toggle.
+OPToggles uses `OPA` as the source of truth regarding what users are authorized for each feature toggle.
 
 `OPAL` is also a necessary component in order to get live policy/data updates and keep your feature toggles always up to
 date.
 
-On startup - `OpToggles` would query the configured `OPAL Client` ([See configuration guide](#docs/configuration.md))
+On startup - `OPToggles` would query the configured `OPAL Client` ([See configuration guide](#docs/configuration.md))
 for the address of the `OPA` instance it manages.
 
-`OpToggles` would then register to `OPAL Client` as an update callback. `OPAL` would then make an HTTP request
-to `OpToggles` on any update to policy or policy data.
+`OPToggles` would then register to `OPAL Client` as an update callback. `OPAL` would then make an HTTP request
+to `OPToggles` on any update to policy or policy data.
 
 The update callback triggers a sync process that would query `OPA` for the current user sets authorized for each feature
 toggle. If `OPA` is unavailable, the query would be retried indefinitely with exponential sleep intervals (maxing out at
@@ -101,15 +103,15 @@ toggle. If `OPA` is unavailable, the query would be retried indefinitely with ex
 
 ## <a name="targets"></a>Toggle Targets
 
-The toggle targets are the feature management instances to which `OpToggles` syncs its configured toggles with their
+The toggle targets are the feature management instances to which `OPToggles` syncs its configured toggles with their
 current authorized users lists.
 
-`OpToggles` currerntly supports 2 target types: LaunchDarkly and a Generic REST API target.
+`OPToggles` currerntly supports 2 target types: LaunchDarkly and a Generic REST API target.
 
 [Let us know](#community) if you're interested in other targets.
 
-On startup `OpToggles` creates the toggles, or just updates their metadata if they're already created. Do not manage
-your toggles manualy - as your changes would be overridden by `OpToggles`.
+On startup `OPToggles` creates the toggles, or just updates their metadata if they're already created. Do not manage
+your toggles manualy - as your changes would be overridden by `OPToggles`.
 
 On each sync process the target would be updated with the current authorized users for each toggle. On update failure,
 it would be retried indefinitely with exponential sleep intervals (maxing out at 16 secs).
@@ -123,22 +125,22 @@ range of languages and client side technologies.
 
 Each OpToggle is mapped to a "
 Feature Flag" in LaunchDarkly. Feature Flags can have different values across different environments. You can set the
-environments you want to be synced in `OpToggles`' configuration.
+environments you want to be synced in `OPToggles`' configuration.
 
-For each of the set environments of the feature flag, `OpToggles` would turn on "Targeting" mode; with `False` as the
+For each of the set environments of the feature flag, `OPToggles` would turn on "Targeting" mode; with `False` as the
 default value, and `True` as the value for each of the authorized (thus targeted) users (queried from `OPA`).
 
 ### <a name="targets"></a>Generic REST API
 
 This target type should enable you to integrate with your own custom feature management system.
 
-To create the toggles, `OpToggles` would make a `POST` request to the configured URL. The request's body is a json
+To create the toggles, `OPToggles` would make a `POST` request to the configured URL. The request's body is a json
 representation of the toggle object which contains:
 
 - `key` field with the configured identifier of the toggle
 - Other user defined fields (supplied as "key: value" pairs under the toggle's spec)
 
-To update the toggles with the latest authorized users list, `OpToggles` would make a `PATCH` request to "
+To update the toggles with the latest authorized users list, `OPToggles` would make a `PATCH` request to "
 {configured-url}/{toggle-key}", containing a new value for the `users` field of the toggle.
 
 You can also set user defined HTTP headers that would be added for each REST API call to your target (e.g.
@@ -146,10 +148,10 @@ authorization).
 
 ## <a name="healthchecks"></a>Health Checks
 
-`OpToggles` exposes a few endpoints to be used for health checking by external services:
+`OPToggles` exposes a few endpoints to be used for health checking by external services:
 
 - `/health/live` <br/>
-  Returns 200 as long as `OpToggles` runs. <br/><br/>
+  Returns 200 as long as `OPToggles` runs. <br/><br/>
 - `/health/started` <br/>
   Returns 200 if init sequence is done (Retrieving OPA's address, registering the update callback & creating the
   toggles). <br/>
@@ -165,7 +167,7 @@ We would love to hear from you! 😃
 **Have a question or a feature request?** <br/>
 Post it in our [Github discussions](https://github.com/authorizon/opal/discussions)
 
-**Have an issue with `OpToggles`?** <br/>
+**Have an issue with `OPToggles`?** <br/>
 Report issues in [Github issues](https://github.com/authorizon/opal/issues)
 
 **Want to chat?** <br/>

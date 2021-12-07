@@ -78,7 +78,7 @@ it [here](https://app.launchdarkly.com/settings/projects/new).
 
 Your feature toggles can have different configurations for different deployment environments, you would need at least
 one environment, which you can create [here](https://app.launchdarkly.com/settings/projects/default/env/new). In our
-example - we defined 2 environments: `production` & `test`.
+example - we use the 2 pre-defined environments: `production` & `test`.
 
 Everything should look like that:
 
