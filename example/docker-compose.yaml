@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  broadcast_channel:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  opal_server:
+    image: authorizon/opal-server:0.1.14
+    environment:
+      - OPAL_POLICY_REPO_URL=https://github.com/authorizon/OPToggles
+      - OPAL_POLICY_REPO_MAIN_BRANCH=master
+      - OPAL_POLICY_REPO_MANIFEST_PATH=example/.manifest
+      - OPAL_POLICY_REPO_POLLING_INTERVAL=2
+      - OPAL_BROADCAST_URI=postgres://postgres:postgres@broadcast_channel:5432/postgres
+      - UVICORN_NUM_WORKERS=4
+      - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"http://host.docker.internal:7002/policy-data","topics":["policy_data"]}]}}
+    ports:
+      - "7002:7002"
+    depends_on:
+      - broadcast_channel
+
+  opal_client:
+    image: authorizon/opal-client:0.1.14
+    environment:
+      - OPAL_SERVER_URL=http://opal_server:7002
+      - OPAL_SHOULD_REPORT_ON_DATA_UPDATES=True
+      - OPAL_DEFAULT_UPDATE_CALLBACKS={"callbacks":["http://opal_server:7002/data/callback_report"]}
+      - OPAL_OPA_HEALTH_CHECK_POLICY_ENABLED=True
+    ports:
+      - "7000:7000"
+      - "8181:8181"
+    depends_on:
+      - opal_server
+    command: sh -c "/usr/wait-for.sh opal_server:7002 --timeout=20 -- /start.sh"
+
+  optoggles:
+    image: authorizon/optoggles:latest
+    depends_on:
+      - opal_client
+    restart: on-failure
+    volumes:
+      - $PWD/launchdarkly-config.yaml:/etc/optoggles/config.yaml
+#      - $PWD/restapi-config.yaml:/etc/optoggles/config.yaml

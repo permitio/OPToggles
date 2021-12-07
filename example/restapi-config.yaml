@@ -1,0 +1,32 @@
+bind: ":8080"
+
+sources:
+  - id: example-opal
+    url: http://opal_client:7000
+    token: ""
+    advertisedAddress: optoggles:8080
+
+target:
+  targetType: restapi
+  targetSpec:
+    endpointUrl: "https://httpbin.org/anything/toggles"
+    extraHeaders:
+      Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+
+toggles:
+  - key: "us-feature"
+    usersPolicy:
+      source: example-opal
+      package: "app.rbac"
+      rule: "us_users"
+    spec:
+      name: "US Only Feature"
+      description: "US residents only section"
+  - key: "billing-feature"
+    usersPolicy:
+      source: example-opal
+      package: "app.rbac"
+      rule: "billing_users"
+    spec:
+      name: "Billing Feature"
+      description: "Access billing dashboard"
