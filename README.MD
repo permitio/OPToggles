@@ -16,9 +16,14 @@ Open policy based feature toggling
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
 
-`OPToggles` was built to bring the power of <a href="https://github.com/authorizon/opal" target="_blank">`OPA` + `OPAL`</a> into your existing feature toggling solutions. <br/>
+We often want our frontend to reflect the permissions enforced by the backend. E.g. if a user is not allowed to click run the action behind a button - don't show them that button. 
+
+`OPToggles` brings the power of <a href="https://github.com/authorizon/opal" target="_blank">`OPA` + `OPAL`</a> into your existing feature toggling solutions. <br/>
 It enables you to create user targeted feature flags/toggles based on <a href="https://openpolicyagent.org" target="_blank">Open Policy</a> managed authorization rules, and keep them
 synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
+<br/>
+With OPToggles frontend devs can continue to enjoy working with the feature flags they are familar with, and backend-devs easily harness the power of open-policy.
+
 
 <img src="docs/optoggles-demo.gif" alt="OPToggles Demo">
 
