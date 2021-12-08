@@ -1,5 +1,5 @@
 <p  align="center">
- <img src="https://i.ibb.co/BGVBmMK/opal.png" height=170 alt="opal" border="0" />
+ <img src="https://i.ibb.co/m4cN6nW/optoggles.png" height=170 alt="opal" border="0" />
 </p>
 <h1 align="center">
 OPToggles
