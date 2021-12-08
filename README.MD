@@ -1,5 +1,5 @@
 <p  align="center">
- <img src="https://i.ibb.co/m4cN6nW/optoggles.png" height=170 alt="opal" border="0" />
+ <img src="https://i.ibb.co/m4cN6nW/optoggles.png" height=170 alt="optoggles" border="0" />
 </p>
 <h1 align="center">
 OPToggles
@@ -16,19 +16,19 @@ Open policy based feature toggling
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
 
-`OPToggles` was built to bring the power of `OPA` + `OPAL` into your existing feature toggling solutions. <br/>
-It enables you to create user targeted feature flags/toggles based on `OPA` managed authorization rules, and keep them
+`OPToggles` was built to bring the power of <a href="https://github.com/authorizon/opal" target="_blank">`OPA` + `OPAL`</a> into your existing feature toggling solutions. <br/>
+It enables you to create user targeted feature flags/toggles based on <a href="https://openpolicyagent.org" target="_blank">Open Policy</a> managed authorization rules, and keep them
 synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 
 <img src="docs/optoggles-demo.gif" alt="OPToggles Demo">
 
 # Table of contents
 
-- [⚡ Quick Start](#quick-start)
-- [🤿 How Does It Work](#design)
-- [🦮 First OPToggle Walkthrough](docs/walkthrough.md)
-- [📖 Configuration File Reference](docs/configuration.md)
-- [👥 Community & Contribution](#community)
+- [⚡&nbsp; Quick Start](#quick-start)
+- [🤿&nbsp; How Does It Work](#design)
+- [🦮&nbsp; First OPToggle Walkthrough](docs/walkthrough.md)
+- [📖&nbsp; Configuration File Reference](docs/configuration.md)
+- [👥&nbsp; Community & Contribution](#community)
 
 # <a name="quick-start"></a>⚡️ Quick Start
 
@@ -88,13 +88,13 @@ docker build . -t optoggles:$IMAGE_TAG
 
 OPToggles uses `OPA` as the source of truth regarding what users are authorized for each feature toggle.
 
-`OPAL` is also a necessary component in order to get live policy/data updates and keep your feature toggles always up to
+`OPAL` is used in order to get live policy/data updates. Keeping your feature toggles always up to
 date.
 
 On startup - `OPToggles` would query the configured `OPAL Client` ([See configuration guide](#docs/configuration.md))
 for the address of the `OPA` instance it manages.
 
-`OPToggles` would then register to `OPAL Client` as an update callback. `OPAL` would then make an HTTP request
+`OPToggles` would then register with the `OPAL Client` requesting an update callback. `OPAL` would then make an HTTP request
 to `OPToggles` on any update to policy or policy data.
 
 The update callback triggers a sync process that would query `OPA` for the current user sets authorized for each feature
@@ -165,10 +165,10 @@ authorization).
 We would love to hear from you! 😃
 
 **Have a question or a feature request?** <br/>
-Post it in our [Github discussions](https://github.com/authorizon/opal/discussions)
+Post it in our [Github discussions](https://github.com/authorizon/OPToggles/discussions)
 
 **Have an issue with `OPToggles`?** <br/>
-Report issues in [Github issues](https://github.com/authorizon/opal/issues)
+Report issues in [Github issues](https://github.com/authorizon/OPToggles/issues)
 
 **Want to chat?** <br/>
 Great! join our [Slack community](https://join.slack.com/t/opal-access/shared_invite/zt-nz6yjgnp-RlP9rtOPwO0n0aH_vLbmBQ)
