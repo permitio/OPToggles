@@ -2,21 +2,23 @@
 
 Let's walk you through setting up your first open policy based feature toggles, integrated with `LaunchDarkly`!
 
-### Setup `OPA` + `OPAL`
+<br/>
+
+## Setup `OPA` + `OPAL`
 
 We'll use `docker-compose` for the task, the end result is
-available [here](https://github.com/authorizon/OPToggles/tree/master/example).
+available [here](https://github.com/permitio/OPToggles/tree/master/example).
 
 First things first, we're going to need an `OPA` instance, managed by `OPAL` for realtime policy and policy data
 updates. Our starting point would be one of `OPAL`'s
-example [docker-compose configurations](https://github.com/authorizon/opal/blob/master/docker/docker-compose-example.yml)
+example [docker-compose configurations](https://github.com/permitio/opal/blob/master/docker/docker-compose-example.yml)
 .<br/>(To learn more about working with `OPAL` container images
-view [this guide](https://github.com/authorizon/opal/blob/master/docs/HOWTO/get_started_with_opal_using_docker.md))
+view [this guide](https://github.com/permitio/opal/blob/master/docs/HOWTO/get_started_with_opal_using_docker.md))
 
 In order to have policy based user-targeted feature toggles, we're going to need some users data, and some policies:
 
-We'll get `data.json` from this `Authorizon`'
-s [example policy repo](https://github.com/authorizon/opal-example-policy-repo/blob/master/data.json). And we'll create
+We'll get `data.json` from this `Permit.io`'
+s [example policy repo](https://github.com/permitio/opal-example-policy-repo/blob/master/data.json). And we'll create
 a new file `features.rego` with the following rego rules:
 
 ```rego
@@ -39,17 +41,17 @@ This snippet declares two sets of users: `billing_users` returns a set of all us
 role. `us_users` returns a set of all users which are located in the US.
 
 We want to feed `OPA` with that data & policies, for that - we'll use `OPAL`'
-s [git-tracking capabilities](https://github.com/authorizon/opal/blob/master/docs/HOWTO/track_a_git_repo.md):
+s [git-tracking capabilities](https://github.com/permitio/opal/blob/master/docs/HOWTO/track_a_git_repo.md):
 
 1. Put both the policy & data files in a git repo with a `.manifest`  file listing the files paths `OPAL` need to track.
    We already have our example files in this repo
-   under [example/policy](https://github.com/authorizon/OPToggles/tree/master/example/policy).
+   under [example/policy](https://github.com/permitio/OPToggles/tree/master/example/policy).
 2. Edit our `docker-compose.yaml` to configure `OPAL Server` to track the right git repo, branch & `.manifest` file:
 
 ```yaml
   opal_server:
     environment:
-      - OPAL_POLICY_REPO_URL=https://github.com/authorizon/OPToggles
+      - OPAL_POLICY_REPO_URL=https://github.com/permitio/OPToggles
       - OPAL_POLICY_REPO_MAIN_BRANCH=master
       - OPAL_POLICY_REPO_MANIFEST_PATH=example/.manifest
       - OPAL_POLICY_REPO_POLLING_INTERVAL=30
@@ -59,9 +61,11 @@ So we've got policies in place defining the set of usernames allowed using certa
 with your backend to authorize requests using realtime data, and deny users forbidden actions.
 
 But getting an `401 Unauthorized` (or another error message, as elegant as it might be) in the client side isn't exactly
-an UX best practice :)<br/>
+an UX best practice :) 
 
-### Setup `LaunchDarkly`
+<br/>
+
+## Setup `LaunchDarkly`
 
 That's where the magic of feature management platforms enters: `LaunchDarkly` enables you to manage feature toggles
 across multiple projects and deployment environments, and it has rich client-side sdk support, already used by many
@@ -93,7 +97,7 @@ Don't loose the generated token! We're gonna need it soon.
 ### Setup `OPToggles`
 
 Now let's bring everything together using `OPToggles`. Our configuration yaml
-is [here](https://github.com/authorizon/OPToggles/blob/master/example/launchdarkly-config.yaml), and looks like that:
+is [here](https://github.com/permitio/OPToggles/blob/master/example/launchdarkly-config.yaml), and looks like that:
 
 ```yaml
 sources:
@@ -137,10 +141,10 @@ Important comments:
 3. Each toggle's `usersPolicy` defines the `OPA` source - the package & rule strings match the names from
    the `features.rego` file.
 4. `OPToggles` would query the `OPA` instance that is associated with the supplied `OPAL CLient`.
-5. View our [configuration guide](#configuration) for full understanding of its format.
+5. View our [configuration guide](configuration.md) for full understanding of its format.
 
 Now we can add the `OPToggles` as a service to
-our [docker-compose](https://github.com/authorizon/OPToggles/blob/master/example/docker-compose.yaml):
+our [docker-compose](https://github.com/permitio/OPToggles/blob/master/example/docker-compose.yaml):
 
 ```yaml
   optoggles:
