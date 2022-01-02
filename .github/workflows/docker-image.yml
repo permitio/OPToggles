@@ -26,11 +26,11 @@ jobs:
         with:
           context: .
           push: true
-          tags: authorizon/optoggles:${{ steps.extract_branch.outputs.ref }}
+          tags: permitio/optoggles:${{ steps.extract_branch.outputs.ref }}
       - name: Build and push latest
         if: ${{ github.ref == 'refs/heads/master' }}
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
-          tags: authorizon/optoggles:latest
+          tags: permitio/optoggles:latest
