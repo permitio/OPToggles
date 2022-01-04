@@ -1,4 +1,4 @@
-# <a name="configuration"></a>📖 Configuration File Reference
+# <a name="configuration"></a>📓 Configuration File Reference
 
 ### Basic structure
 
@@ -45,7 +45,7 @@ The `target` section tells `OPToggles` where it should create and sync its user-
 targets:
 
 - The [LaunchDarkly](https://launchdarkly.com/) Feature management platform
-- Generic REST API HTTP Server - [More Info](#httpserver)
+- Generic REST API HTTP Server - [More Info](#LINK_MISSING)
 
 Only one `target` is configured for an instance of `OPToggles`
 
