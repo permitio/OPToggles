@@ -64,7 +64,6 @@ func (ldt *LaunchdarklyTarget) CreateToggle(ctx context.Context, key string, spe
 		nil)
 
 	if resp != nil && resp.StatusCode == http.StatusConflict {
-		// Flag already exists - make sure we also update the name
 		// Flag exists - just update the name
 		var name interface{} = toggleSpec.Name
 		_, resp, err = ldt.client.FeatureFlagsApi.PatchFeatureFlag(ctx, toggleSpec.ProjKey, key,
