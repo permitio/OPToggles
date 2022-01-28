@@ -59,4 +59,4 @@ If you are using our project, please consider giving us a ⭐️
 [join-slack-link]: https://i.ibb.co/wzrGHQL/Group-749.png
 [badge-slack-link]: https://bit.ly/opal-slack
 [follow-twitter-link]: https://i.ibb.co/YZwWJm7/Group-751.png
-[badge-twitter-link]: https://twitter.com/optoggles
+[badge-twitter-link]: https://twitter.com/opal
