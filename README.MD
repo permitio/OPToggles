@@ -35,7 +35,7 @@ With OPToggles frontend devs can continue to enjoy working with the feature flag
 - 🤿 &nbsp; [How Does It Work](docs/howitworks.md)
 - 🦮 &nbsp; [First OPToggle Walkthrough](docs/walkthrough.md)
 - 📓 &nbsp; [Configuration File Reference](docs/configuration.md)
-- 📖 &nbsp; [For further reading check out our Blog](https://www.Permit.io/blog).
+- 📖 &nbsp; [For further reading check out our Blog](https://bit.ly/permitioblog).
 
 # <a name="community"></a>👥 Community & Contribution
 
@@ -57,6 +57,6 @@ If you are using our project, please consider giving us a ⭐️
 - Prior to submitting a PR - open an issue on GitHub, or make sure your PR addresses an existing issue well.  
 
 [join-slack-link]: https://i.ibb.co/wzrGHQL/Group-749.png
-[badge-slack-link]: https://bit.ly/opal-slack
+[badge-slack-link]: https://bit.ly/permitioslack
 [follow-twitter-link]: https://i.ibb.co/YZwWJm7/Group-751.png
 [badge-twitter-link]: https://twitter.com/opal
