@@ -15,8 +15,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PAT }}
       - name: Extract branch/tag name
         shell: bash
         run: echo "##[set-output name=ref;]$(echo ${GITHUB_REF#refs/*/} | sed 's/\//_/g')"
