@@ -9,7 +9,7 @@ could be supplied through a volume mount.
 For example:
 
 ```sh
-docker run -n optoggles -p 8080:8080 -v $PWD/config.yaml:/optoggles/config.yaml --rm -it authorizon/optoggles:latest
+docker run -n optoggles -p 8080:8080 -v $PWD/config.yaml:/optoggles/config.yaml --rm -it permitio/optoggles:latest
 ```
 
 Where `config.yaml`:

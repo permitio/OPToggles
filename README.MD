@@ -9,8 +9,8 @@
 Open policy based feature toggling
 </h2>
 
-<a href="https://hub.docker.com/r/authorizon/optoggles" target="_blank">
-    <img src="https://img.shields.io/docker/pulls/authorizon/optoggles?label=Docker%20pulls" alt="Docker pulls">
+<a href="https://hub.docker.com/r/permitio/optoggles" target="_blank">
+    <img src="https://img.shields.io/docker/pulls/permitio/optoggles?label=Docker%20pulls" alt="Docker pulls">
 </a>
 <a href="https://opal-access.slack.com/" target="_blank">
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">

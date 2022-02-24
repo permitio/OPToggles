@@ -148,7 +148,7 @@ our [docker-compose](https://github.com/permitio/OPToggles/blob/master/example/d
 
 ```yaml
   optoggles:
-    image: authorizon/optoggles:latest
+    image: permitio/optoggles:latest
     depends_on:
       - opal_client
     restart: on-failure

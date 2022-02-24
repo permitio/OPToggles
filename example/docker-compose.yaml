@@ -8,12 +8,12 @@ services:
       - POSTGRES_PASSWORD=postgres
 
   opal_server:
-    image: authorizon/opal-server:0.1.14
+    image: permitio/opal-server:latest
     environment:
-      - OPAL_POLICY_REPO_URL=https://github.com/authorizon/OPToggles
+      - OPAL_POLICY_REPO_URL=https://github.com/permitio/OPToggles
       - OPAL_POLICY_REPO_MAIN_BRANCH=master
       - OPAL_POLICY_REPO_MANIFEST_PATH=example/.manifest
-      - OPAL_POLICY_REPO_POLLING_INTERVAL=2
+      - OPAL_POLICY_REPO_POLLING_INTERVAL=10
       - OPAL_BROADCAST_URI=postgres://postgres:postgres@broadcast_channel:5432/postgres
       - UVICORN_NUM_WORKERS=4
       - OPAL_DATA_CONFIG_SOURCES={"config":{"entries":[{"url":"http://host.docker.internal:7002/policy-data","topics":["policy_data"]}]}}
@@ -23,7 +23,7 @@ services:
       - broadcast_channel
 
   opal_client:
-    image: authorizon/opal-client:0.1.14
+    image: permitio/opal-client:latest
     environment:
       - OPAL_SERVER_URL=http://opal_server:7002
       - OPAL_SHOULD_REPORT_ON_DATA_UPDATES=True
@@ -37,7 +37,7 @@ services:
     command: sh -c "/usr/wait-for.sh opal_server:7002 --timeout=20 -- /start.sh"
 
   optoggles:
-    image: authorizon/optoggles:latest
+    image: permitio/optoggles:latest
     depends_on:
       - opal_client
     restart: on-failure
