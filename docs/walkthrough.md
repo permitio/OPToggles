@@ -18,8 +18,8 @@ view [this guide](https://github.com/permitio/opal/blob/master/docs/HOWTO/get_st
 In order to have policy based user-targeted feature toggles, we're going to need some users data, and some policies:
 
 We'll get `data.json` from this `Permit.io`'
-s [example policy repo](https://github.com/permitio/opal-example-policy-repo/blob/master/data.json). And we'll create
-a new file `features.rego` with the following rego rules:
+s [example policy repo](https://github.com/permitio/opal-example-policy-repo/blob/master/data.json). And we'll create a
+new file `features.rego` with the following rego rules:
 
 ```rego
 package app.rbac
@@ -61,7 +61,7 @@ So we've got policies in place defining the set of usernames allowed using certa
 with your backend to authorize requests using realtime data, and deny users forbidden actions.
 
 But getting an `401 Unauthorized` (or another error message, as elegant as it might be) in the client side isn't exactly
-an UX best practice :) 
+an UX best practice :)
 
 <br/>
 
@@ -81,17 +81,19 @@ pre-existing `default` project. If you want to create a new one - do
 it [here](https://app.launchdarkly.com/settings/projects/new).
 
 Your feature toggles can have different configurations for different deployment environments, you would need at least
-one environment, which you can create [here](https://app.launchdarkly.com/settings/projects/default/env/new). In our
-example - we use the 2 pre-defined environments: `production` & `test`.
+one environment, which you can create [here](https://app.launchdarkly.com/settings/projects/default/env/new). <br/>
+In our example - we use the 2 pre-defined environments: `production` & `test`.
 
 Everything should look like that:
 
 <img src="https://i.ibb.co/8sZ43bp/image.jpg" alt="LaunchDarkly Project Settings"/>
 
-From now on - OPToggles would take care of toggle creation and updates thorugh `LaunchDarkly` for us. In order to so it
-needs an access token. You can create a token under `Account settings` -> `Authorization`, or
-using [this link](https://app.launchdarkly.com/settings/authorization/tokens/new). For `OPToggles` to work, the token
-should have `Writer` permissions. <br/>
+From now on - OPToggles would take care of toggle creation and updates thorugh `LaunchDarkly` for us. <br/>
+**In order to so it needs an access token (aka API key), those are only available for Professional plans or higher at
+the moment. <br/>**
+You can create a token under `Account settings` -> `Authorization`, or
+using [this link](https://app.launchdarkly.com/settings/authorization/tokens/new). <br/>
+`OPToggles` requires your token to have `Writer` permissions at minimum. <br/>
 Don't loose the generated token! We're gonna need it soon.
 
 ### Setup `OPToggles`

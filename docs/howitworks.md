@@ -4,14 +4,13 @@
 
 OPToggles uses `OPA` as the source of truth regarding what users are authorized for each feature toggle.
 
-`OPAL` is used in order to get live policy/data updates. Keeping your feature toggles always up to
-date.
+`OPAL` is used in order to get live policy/data updates. Keeping your feature toggles always up to date.
 
 On startup - `OPToggles` would query the configured `OPAL Client` ([See configuration guide](configuration.md))
 for the address of the `OPA` instance it manages.
 
-`OPToggles` would then register with the `OPAL Client` requesting an update callback. `OPAL` would then make an HTTP request
-to `OPToggles` on any update to policy or policy data.
+`OPToggles` would then register with the `OPAL Client` requesting an update callback. `OPAL` would then make an HTTP
+request to `OPToggles` on any update to policy or policy data.
 
 The update callback triggers a sync process that would query `OPA` for the current user sets authorized for each feature
 toggle. If `OPA` is unavailable, the query would be retried indefinitely with exponential sleep intervals (maxing out at
@@ -36,13 +35,17 @@ For detailed information on configuring each target type see our [configuration 
 
 ### <a name="targets"></a>LaunchDarkly
 
-[LaunchDarkly](https://launchdarkly.com/) is a popular feature management platform, with available SDKs for a wide
-range of languages and client side technologies.
+[LaunchDarkly](https://launchdarkly.com/) is a popular feature management platform, with available SDKs for a wide range
+of languages and client side technologies.
 
-Each OpToggle is mapped to a "Feature Flag" in LaunchDarkly. Feature Flags can have different values across different environments. You can set the environments you want to be synced in `OPToggles`' configuration.
+Each OpToggle is mapped to a "Feature Flag" in LaunchDarkly. Feature Flags can have different values across different
+environments. You can set the environments you want to be synced in `OPToggles`' configuration.
 
 For each of the set environments of the feature flag, `OPToggles` would turn on "Targeting" mode; with `False` as the
 default value, and `True` as the value for each of the authorized (thus targeted) users (queried from `OPA`).
+
+**In order to integrate `OPToggles` with your LaunchDarkly account, you should be on the Professional plan at
+minimum** (where API access is allowed).
 
 ### <a name="targets"></a>Generic REST API
 

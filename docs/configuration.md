@@ -52,7 +52,7 @@ Only one `target` is configured for an instance of `OPToggles`
 | **Path** | **Type** | **Description** |
 | :--- | :--- | :--- |
 | targetType | string | Either `"launchdarkly"` or `"restapi"` |
-| targetSpec.launchdarklyToken | string | Required if `targetType` is `"launchdarkly"`. <br/>API access token associated with your LaunchDarkly account. Should have at least `Writer` privileges.  |
+| targetSpec.launchdarklyToken | string | Required if `targetType` is `"launchdarkly"`. <br/>API access token associated with your LaunchDarkly account (Available at Pro plan or higher).<br/> Should have at least `Writer` privileges.  |
 | targetSpec.endpointUrl | string | Required if `targetType` is `"restapi"`. <br/>The RestAPI endpoint used to create (/POST) and update (/PATCH) toggles  |
 | targetSpec.extraHeaders | map | Optional if `targetType` is `"restapi"`. <br/> Extra headers to include in the REST API requests (e.g. `Authorization`)
 
