@@ -9,13 +9,15 @@
 Open policy based feature toggling
 </h2>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cf45f769-6b07-47b7-8aed-47213daede65/deploy-status)](https://app.netlify.com/sites/optoggles/deploys)
+<span>
 <a href="https://hub.docker.com/r/permitio/optoggles" target="_blank">
-    <img src="https://img.shields.io/docker/pulls/permitio/optoggles?label=Docker%20pulls" alt="Docker pulls">
+<img src="https://img.shields.io/docker/pulls/permitio/optoggles?label=Docker%20pulls" alt="Docker pulls">
 </a>
 <a href="https://opal-access.slack.com/" target="_blank">
-    <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
+<img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
-[![Netlify Status](https://api.netlify.com/api/v1/badges/cf45f769-6b07-47b7-8aed-47213daede65/deploy-status)](https://app.netlify.com/sites/optoggles/deploys)
+</span>
 
 # What is OPToggles?
 
@@ -33,6 +35,7 @@ With OPToggles frontend devs can continue to enjoy working with the feature flag
 
 # Documentation
 
+- Read the full docs at [OPToggles.opal.ac](https://optoggles.opal.ac)
 - ⚡️ &nbsp; [Quick Start Guide](docs/quickstart.md)
 - 🤿 &nbsp; [How Does It Work](docs/howitworks.md)
 - 🦮 &nbsp; [First OPToggle Walkthrough](docs/walkthrough.md)
