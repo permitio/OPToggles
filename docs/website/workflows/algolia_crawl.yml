@@ -1,0 +1,35 @@
+# This workflow will update the search index so that search results are accurate
+
+name: Crawl website with Algolia
+
+on:
+  push:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  crawl:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # wait until Netlify deploy is done
+      - name: Wait for Netlify Deploy
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+
+      # Run the crawler
+      - name: Crawl the docs site
+        run: docker run -e "APPLICATION_ID=${{ secrets.ALGOLIA_APPLICATION_ID }}" -e "API_KEY=${{ secrets.ALGOLIA_API_KEY }}" -e "CONFIG=$(cat ./docsearch-config.json | jq -r tostring)" algolia/docsearch-scraper

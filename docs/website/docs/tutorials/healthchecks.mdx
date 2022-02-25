@@ -1,0 +1,24 @@
+---
+sidebar_position: 4
+title: 🩺 Health checks
+---
+
+# Health Checks
+
+`OPToggles` exposes several endpoints for health checks by external services:
+
+`/health/live`
+Returns `200` as long as `OPToggles` runs.
+
+
+`/health/started`  
+Returns `200` if init sequence is done, including:
+* Retrieving OPA's address
+* Registering the update callback 
+* Creating the toggles 
+  
+Returns `503` if the sequence init wasn't completed.
+
+`/health` <br/>
+Returns `200` if started and running without errors.  
+Returns `500` if there's an ongoing failure to query OPA or update to the target instance.

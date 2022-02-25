@@ -1,0 +1,126 @@
+---
+sidebar_position: 2
+title: Python
+---
+
+# Python
+
+## Add the SDK to your Python code
+
+Init the Python SDK and check for permissions.
+
+1. Install the Permit.io SDK:
+
+```
+pip install permit
+```
+
+2. Add the SDK to your code (in the top of your py file):
+
+```python
+from permit import Permit
+```
+
+3. Create a new instance of the SDK:
+
+```python
+# This line initializes the SDK and connects your python app
+# to the Permit.io PDP container you've set up.
+permit = Permit(
+    # in production, you might need to change this url to fit your deployment
+    pdp="http://localhost:7000",
+    # your api key
+    token="<your-api-key>",
+)
+```
+
+4. Check for permissions:
+
+```python
+permitted = await permit.check(user["id"], "create", "document")
+
+if permitted:
+    print("User is permitted to create a document")
+else:
+    print("is NOT PERMITTED to create document!")
+```
+
+## Full app example
+
+The following is a Python app with a single file, with `permit` and `FastAPI` modules installed.
+
+Create a new directory for your new python project:
+
+```
+mkdir hello-permissions && cd hello-permissions
+```
+
+Optionally, create a new virtual environment for your project (you might need to install pyenv and pyenv-virtualenv):
+
+```
+pyenv virtualenv permissions && pyenv activate permissions
+```
+
+Now install the Permit.io SDK (We'll also install the FastAPI and Uvicorn packages in order to run an HTTP server in our example):
+
+```
+pip install permit fastapi "uvicorn[standard]"
+```
+
+Create a file called test.py:
+
+```
+touch test.py
+```
+
+Copy the following code inside test.py and replace with your `api key` and `user-object`:  
+You can find instructions on getting an API key [here](../../tutorials/quickstart#2-get-permitio-api-key)
+
+```python
+import asyncio
+
+from permit import Permit
+from fastapi import FastAPI, status, HTTPException
+from fastapi.responses import JSONResponse
+
+app = FastAPI()
+
+# This line initializes the SDK and connects your python app
+# to the Permit.io PDP container you've set up in the previous step.
+permit = Permit(
+    # in production, you might need to change this url to fit your deployment
+    pdp="http://localhost:7000",
+    # your api key
+    token="[YOUR_API_KEY]",
+)
+
+# Example user object
+# You would usually get the user from your authenticantion layer (e.g. Auth0, Cognito, etc) via a JWT token or a database.
+user = {
+    "id": "[user-id]",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@permit.io",
+}
+
+@app.get("/")
+async def check_permissions():
+    permitted = await permit.check(user["id"], "create", "document")
+    if not permitted:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail={
+            "result": f"{user.get('firstName')} {user.get('lastName')} is NOT PERMITTED to create document!"
+        })
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content={
+        "result": f"{user.get('firstName')} {user.get('lastName')} is PERMITTED to create document!"
+    })
+
+```
+
+Now that your application is ready, let's run it:
+
+```
+uvicorn test:app --reload --port=4000
+```
+
+Finally, go to [http://localhost:4000](http://localhost:4000) to see the outcome of the permission check.

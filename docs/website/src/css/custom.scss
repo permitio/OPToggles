@@ -1,0 +1,241 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-font-size-base: 100%;
+  --ifm-code-font-size: 95%;
+
+  /* change primary color to a nicer purple */
+  --ifm-color-primary: #6851ff;
+  --ifm-color-primary-dark: #4b2fff;
+  --ifm-color-primary-darker: #4e3bdb;
+  --ifm-color-primary-darkest: #3728b7;
+  --ifm-color-primary-light: #8573ff;
+  --ifm-color-primary-lighter: #a796ff;
+  --ifm-color-primary-lightest: #f1eeff;
+
+  --ifm-color-secondary: #fff;
+
+  --ifm-color-success: #00c988;
+  --ifm-color-success-lighter: #5feea4;
+  --ifm-color-success-lightest: #c9fcd8;
+  --ifm-color-success-darker: #00ac85;
+  --ifm-color-success-darkest: #00907e;
+
+  --ifm-color-info: #54c7ec;
+
+  --ifm-color-warning: #bf9046;
+  --ifm-color-warning-lighter: #ebd092;
+  --ifm-color-warning-lightest: #fbf4db;
+  --ifm-color-warning-darker: #a47333;
+  --ifm-color-warning-darkest: #895923;
+
+  --ifm-color-danger: #fa383e;
+
+  --ifm-color-danger: #ff5635;
+  --ifm-color-danger-lightest: #fba67f;
+  --ifm-color-danger-darker: #d02f20;
+
+  --doc-sidebar-width: 100%;
+}
+
+/* make fonts in markdown slightly smaller */
+.markdown {
+  & h1:first-child {
+    --ifm-h1-font-size: 2.5rem;
+  }
+
+  & > h2 {
+    --ifm-h2-font-size: 1.9rem;
+  }
+
+  & > h3 {
+    --ifm-h3-font-size: 1.4rem;
+  }
+
+  // & > h4 {
+  //   --ifm-h4-font-size: 1rem;
+  // }
+
+  // & > h5 {
+  //   --ifm-h5-font-size: 0.875rem;
+  // }
+
+  // & > h6 {
+  //   --ifm-h6-font-size: 0.85rem;
+  // }
+}
+
+/* Content */
+
+html[data-theme="light"] {
+  --ifm-code-background: rgba(0, 0, 0, 0.06);
+  --docsearch-container-background: rgba(32, 35, 42, 0.6);
+}
+
+html[data-theme="dark"] {
+  --ifm-code-background: rgba(255, 255, 255, 0.06);
+  --ifm-toc-border-color: var(--dark);
+  --ifm-color-emphasis-300: var(--dark);
+  --ifm-hr-border-color: var(--dark);
+
+  // brighter primary color for dark mode
+  --ifm-color-primary: rgb(197, 185, 255);
+
+  .pagination-nav__item {
+    border: 1px solid rgba(197, 185, 255, 0.3);
+    border-radius: 5px;
+  }
+}
+
+html[data-theme="dark"] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+// make padding at the top of the document larger
+main > div.container:first-child {
+  &.padding-top--md {
+    padding-top: 2.2rem !important;
+  }
+
+  & article {
+    padding-left: 1rem;
+  }
+}
+
+// centered layout - centers the main section (below header)
+.main-wrapper {
+  max-width: 1300px;
+  width: 1300px;
+  align-self: center;
+
+  h1[class^="docTitle"] {
+    font-size: 2.8rem;
+  }
+}
+
+main[class^="docMainContainer"] > .container {
+  padding-top: 2rem !important;
+}
+
+@media (max-width: 1416px) {
+  .main-wrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 1320px) and (min-width: 997px) {
+  .container {
+    max-width: calc(
+      var(--ifm-container-width) - 125px - var(--ifm-spacing-horizontal) * 2
+    );
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: auto !important;
+  }
+}
+
+@media (min-width: 997px) {
+  main[class^="docMainContainer"] {
+    width: calc(100% - var(--doc-sidebar-width));
+    display: contents;
+  }
+}
+
+// centers the navbar
+.navbar {
+  .navbar__inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+// makes the sidebar smaller
+aside[class^="docSidebarContainer"] {
+  --doc-sidebar-width: 250px;
+}
+
+// header
+.header-github-link:before {
+  background: url("../../static/img/github.svg") no-repeat;
+  background-size: 24px 24px;
+  content: "";
+  display: flex;
+  height: 24px;
+  width: 24px;
+}
+
+.header-slack-link:before {
+  background: url("../../static/img/slack.svg") no-repeat;
+  background-size: 24px 24px;
+  content: "";
+  display: flex;
+  height: 24px;
+  width: 24px;
+}
+
+.navbar__items--right {
+  .navbar__item {
+    padding-left: calc(var(--ifm-navbar-item-padding-horizontal) / 2);
+  }
+}
+
+// sidebar first-level categories should be more separated
+.theme-doc-sidebar-item-category-level-1.menu__list-item:not(:first-child) {
+  > a {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  margin-top: 1.5rem;
+}
+
+// removes indent from sub menu items
+// .menu__list .menu__list {
+//   margin-left: 0;
+// }
+
+// makes menu items more close to eachother / less padding
+// .menu__list-item {
+//   a {
+//     // padding-top: 4px;
+//     // padding-bottom: 4px;
+//   }
+// }
+
+.bullet-links {
+  a {
+    span {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    span:not(.material-icons) {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    span.material-icons {
+      padding-right: 5px;
+    }
+  }
+
+  a:not(:first-child) {
+    margin-left: 20px;
+  }
+}
