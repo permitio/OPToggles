@@ -16,8 +16,11 @@ Open policy based feature toggling
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/cf45f769-6b07-47b7-8aed-47213daede65/deploy-status)](https://app.netlify.com/sites/optoggles/deploys)
+
 # What is OPToggles?
-We often want our frontend to reflect the permissions enforced by the backend. E.g. if a user is not allowed to click run the action behind a button - don't show them that button. 
+
+We often want our frontend to reflect the permissions enforced by the backend. E.g. if a user is not allowed to click run the action behind a button - don't show them that button.
 
 `OPToggles` brings the power of <a href="https://github.com/permitio/opal" target="_blank">`OPA` + `OPAL`</a> into your existing feature toggling solutions. <br/>
 It enables you to create user targeted feature flags/toggles based on <a href="https://openpolicyagent.org" target="_blank">Open Policy</a> managed authorization rules, and keep them
@@ -25,12 +28,12 @@ synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 <br/>
 With OPToggles frontend devs can continue to enjoy working with the feature flags they are familar with, and backend-devs easily harness the power of open-policy.
 
-
 <img src="docs/optoggles-demo.gif" alt="OPToggles Demo">
 
 </br>
 
 # Documentation
+
 - ⚡️ &nbsp; [Quick Start Guide](docs/quickstart.md)
 - 🤿 &nbsp; [How Does It Work](docs/howitworks.md)
 - 🦮 &nbsp; [First OPToggle Walkthrough](docs/walkthrough.md)
@@ -38,8 +41,6 @@ With OPToggles frontend devs can continue to enjoy working with the feature flag
 - 📖 &nbsp; [For further reading check out our Blog](https://bit.ly/permitioblog).
 
 # <a name="community"></a>👥 Community & Contribution
-
-
 
 **Come talk to us about OPToggles, or authorization in general - we would love to hear from you ❤️**
 
@@ -53,8 +54,9 @@ If you are using our project, please consider giving us a ⭐️
 [![Button][join-slack-link]][badge-slack-link] </br> [![Button][follow-twitter-link]][badge-twitter-link]
 
 ## Contributing to OPToggles
-- Pull requests are welcome! (please make sure to include *passing* tests and docs)
-- Prior to submitting a PR - open an issue on GitHub, or make sure your PR addresses an existing issue well.  
+
+- Pull requests are welcome! (please make sure to include _passing_ tests and docs)
+- Prior to submitting a PR - open an issue on GitHub, or make sure your PR addresses an existing issue well.
 
 [join-slack-link]: https://i.ibb.co/wzrGHQL/Group-749.png
 [badge-slack-link]: https://bit.ly/permitioslack
