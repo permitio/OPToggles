@@ -15,7 +15,6 @@ Open policy based feature toggling
 <a href="https://opal-access.slack.com/" target="_blank">
     <img src="https://img.shields.io/badge/Slack%20Community-4A154B?logo=slack&logoColor=white" alt="Join our Slack!">
 </a>
-
 [![Netlify Status](https://api.netlify.com/api/v1/badges/cf45f769-6b07-47b7-8aed-47213daede65/deploy-status)](https://app.netlify.com/sites/optoggles/deploys)
 
 # What is OPToggles?
