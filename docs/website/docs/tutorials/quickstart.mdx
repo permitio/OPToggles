@@ -6,7 +6,7 @@ title: Quickstart
 OPToggles should be run as a docker container. <br/>
 
 Port 8080 is used for listening to both OPAL trigger callbacks and http health checks. 
-And configuration yaml file could be supplied through a volume mount, for example:
+A configuration yaml file could be supplied through a volume mount, for example:
 
 ```sh
 docker run -n optoggles -p 8080:8080 -v $PWD/config.yaml:/optoggles/config.yaml --rm -it permitio/optoggles:latest
