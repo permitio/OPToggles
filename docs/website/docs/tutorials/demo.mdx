@@ -7,9 +7,9 @@ Let's walk you through setting up your first open policy based feature toggles, 
 
 The demo code and example files available [here](https://github.com/permitio/OPToggles/tree/master/example).
 
-## Step 1 - preparation
+## Step 1 - Preparation
 
-In the prepataion step, we are creating a user-targeted policy that we need for OPToggle.
+In the prepataion step, we are creating a user-targeted policy that we need for OPToggles.
 We're going to create user data and policy files, and declare them in a manifest file.
 
 ### Exmaple data
@@ -99,8 +99,8 @@ In our example data.json you can find:
 
 ### Example policy
 
-OPA uses Rego code a high-level declarative language. 
-Rego can be used to write any type of rule, including simple and complex rules with loop, function calls, and more.
+OPA uses Rego code - a high-level declarative language. 
+Rego can be used to write any type of rule, including simple and complex rules with loops, function calls, and more.
 For our example, let's create a new `features.rego` file with the following rules.
 The Rego code is based on the structure of the data.json file we created in the previous step:
 
@@ -140,7 +140,7 @@ We'll use `docker-compose` for setting up `OPAL` and `OPA`.
 
 We're going to need an `OPA` instance, managed by `OPAL` for realtime policy and policy data
 updates. Our starting point would be one of `OPAL`'s
-example [docker-compose configurations](https://github.com/permitio/opal/blob/master/docker/docker-compose-example.yml)
+examples [docker-compose configurations](https://github.com/permitio/opal/blob/master/docker/docker-compose-example.yml)
 .<br/>
 To learn more about working with `OPAL` container images
 view [this guide](https://github.com/permitio/opal/blob/master/docs/HOWTO/get_started_with_opal_using_docker.md))
@@ -159,15 +159,15 @@ Edit our `docker-compose.yaml` to configure `OPAL Server` to track the right git
       - OPAL_POLICY_REPO_POLLING_INTERVAL = 30
 ```
 
-Once updating docker-composer yaml file, you can already use `OPAL` with your backend to authorize requests using realtime data, and deny users forbidden actions.
+Once updating the docker-composer yaml file, you can already use `OPAL` with your backend to authorize requests using realtime data, and deny users forbidden actions.
 
 But getting an `401 Unauthorized` (or another error message, as elegant as it might be) in the client side isn't exactly
-an UX best practice :)
+the best UX experience :)
 
 ## Step 3 - Setup LaunchDarkly
 
-That's where the magic of feature management platforms enters: `LaunchDarkly` enables you to manage feature toggles
-across multiple projects and deployment environments, and it has rich client-side sdk support, already used by many
+That's where the magic of feature management platforms comes in: `LaunchDarkly` enables you to manage feature toggles
+across multiple projects and deployment environments, and has rich client-side sdk support already used by many
 developers to turn UI features on & off.
 
 If you don't already have a `LaunchDarkly` account, create it [here](https://app.launchdarkly.com/signup).
@@ -175,11 +175,11 @@ If you don't already have a `LaunchDarkly` account, create it [here](https://app
 Next thing you would need is a `project` and one or more `environment`. You can manage those under `Account settings`
 -> `Projects`.
 
-Each `LaunchDarkly` account can contain multiple projects for different products. I this example we're going to use the
+Each `LaunchDarkly` account can contain multiple projects for different products. In this example we're going to use the
 pre-existing `default` project. 
 
 Your feature toggles can have configurations for different deployment environments.
-In our example - we use the two pre-defined environments: `production` & `test`.
+In our example - we will use two pre-defined environments: `production` & `test`.
 
 LaunchDarkly project settings should look like that:
 
@@ -230,7 +230,7 @@ sources:
     # Replace with your generated api token
     launchdarklyToken: "api-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
-OPToggle supports two targets at the moment, LaunchDarkly and a generic Rest API.
+OPToggles supports two targets at the moment, LaunchDarkly and a generic Rest API.
 Read the [configuration guide](configuration.md) to see where to find the API key in LaunchDarkly.
 
 ### Config toggles
