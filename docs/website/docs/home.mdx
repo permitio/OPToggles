@@ -13,7 +13,7 @@ If the user has no permissions to use the feature, we decide whether we display 
 OPToggles (Open Policy Toggles) is an open-source project that utilizes [OPA + OPAL](https://github.com/permitio/opal) into your existing feature toggling solution. <br/>
 OPToggles automatically creates user-targeted feature flags based on your existing authorization rules, pushes them to the feature flag solution, and keeps them synced using OPAL's real-time policy and policy-data event-driven architecture.
 
-- OPToggles uses `OPA` to determine the policy true for the user. 
+- OPToggles uses `OPA` as the source of truth regarding what users are authorized for each feature toggle.
 - OPToggles uses `OPAL` to get real-time policy/data updates.
 
 OPToggles requires a one-time configuration to connect to  OPA and OPAL, and the rest is automatic.
