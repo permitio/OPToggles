@@ -36,7 +36,7 @@ With OPToggles frontend devs can continue to enjoy working with the feature flag
 # Documentation
 
 - Read the full docs at [OPToggles.opal.ac](https://optoggles.opal.ac)
-- ⚡️ &nbsp; [Quick Start Guide](docs/website/docs/tutorials/quickstart.md)
+- ⚡️ &nbsp; [Quick Start Guide](docs/website/docs/tutorials/quickstart.mdx)
 - 🤿 &nbsp; [How Does It Work](docs/website/docs/tutorials/how_does_it_work.mdx)
 - 🦮 &nbsp; [First OPToggles Walkthrough](docs/website/docs/tutorials/demo.mdx)
 - 📓 &nbsp; [Configuration File Reference](docs/website/docs/tutorials/configuration.md)
