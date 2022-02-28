@@ -29,17 +29,17 @@ synced thanks to `OPAL`'s realtime policy and policy-data change detection.<br/>
 <br/>
 With OPToggles frontend devs can continue to enjoy working with the feature flags they are familar with, and backend-devs easily harness the power of open-policy.
 
-<img src="docs/optoggles-demo.gif" alt="OPToggles Demo">
+<img src="docs/website/optoggles-demo.gif" alt="OPToggles Demo">
 
 </br>
 
 # Documentation
 
 - Read the full docs at [OPToggles.opal.ac](https://optoggles.opal.ac)
-- ⚡️ &nbsp; [Quick Start Guide](docs/quickstart.md)
-- 🤿 &nbsp; [How Does It Work](docs/howitworks.md)
-- 🦮 &nbsp; [First OPToggle Walkthrough](docs/walkthrough.md)
-- 📓 &nbsp; [Configuration File Reference](docs/configuration.md)
+- ⚡️ &nbsp; [Quick Start Guide](docs/website/docs/tutorials/quickstart.md)
+- 🤿 &nbsp; [How Does It Work](docs/website/docs/tutorials/how_does_it_work.mdx)
+- 🦮 &nbsp; [First OPToggles Walkthrough](docs/website/docs/tutorials/demo.mdx)
+- 📓 &nbsp; [Configuration File Reference](docs/website/docs/tutorials/configuration.md)
 - 📖 &nbsp; [For further reading check out our Blog](https://bit.ly/permitioblog).
 
 # <a name="community"></a>👥 Community & Contribution
