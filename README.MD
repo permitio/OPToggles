@@ -36,10 +36,11 @@ With OPToggles frontend devs can continue to enjoy working with the feature flag
 # Documentation
 
 - Read the full docs at [OPToggles.opal.ac](https://optoggles.opal.ac)
-- ⚡️ &nbsp; [Quick Start Guide](docs/website/docs/tutorials/quickstart.mdx)
-- 🤿 &nbsp; [How Does It Work](docs/website/docs/tutorials/how_does_it_work.mdx)
-- 🦮 &nbsp; [First OPToggles Walkthrough](docs/website/docs/tutorials/demo.mdx)
-- 📓 &nbsp; [Configuration File Reference](docs/website/docs/tutorials/configuration.md)
+- ⚡️ &nbsp; [Quick Start Guide](https://optoggles.opal.ac/tutorials/quickstart/)
+- 🤿 &nbsp; [How Does It Work](https://optoggles.opal.ac/tutorials/how_does_it_work/)
+- 🦮 &nbsp; [OPToggles Demo](https://optoggles.opal.ac/tutorials/demo/)
+- 📓 &nbsp; [Configuration File Reference](https://optoggles.opal.ac/tutorials/configuration/)
+- 🩺 &nbsp; [Health Checks](https://optoggles.opal.ac/tutorials/healthchecks/)
 - 📖 &nbsp; [For further reading check out our Blog](https://bit.ly/permitioblog).
 
 # <a name="community"></a>👥 Community & Contribution
