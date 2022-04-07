@@ -3,7 +3,7 @@ package httpserver
 import (
 	"crypto/rand"
 	"errors"
-	"github.com/dgrijalva/jwt-go"
+	"github.com/golang-jwt/jwt"
 	"log"
 	"net/http"
 	"strings"
