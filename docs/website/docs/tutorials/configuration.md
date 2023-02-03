@@ -48,7 +48,7 @@ The `target` section tells `OPToggles` where it should create and sync its user-
 targets:
 
 - The [LaunchDarkly](https://launchdarkly.com/) Feature management platform
-- Generic REST API HTTP Server - [More Info](#LINK_MISSING)
+- Generic REST API HTTP Server - [More Info](https://github.com/permitio/OPToggles/blob/master/example/restapi-config.yaml)
 
 Only one `target` is configured for an instance of `OPToggles`
 
